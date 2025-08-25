@@ -1,0 +1,25 @@
+.header {
+    width: 100vw;
+    height: 75px;
+}
+
+.header .logo {
+    height: 75px;
+}
+
+.header .logo-container {
+    width: 250px;
+}
+
+.header .button-container {
+    width: 250px;
+}
+
+dialog {
+    position: fixed;
+    margin: auto;
+}
+
+.dialog-buttons {
+    float: right;
+}

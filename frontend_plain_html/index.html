@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script type="module" src="https://groupui.vwapps.run/latest/static/group-ui/group-ui.esm.js"></script>
+    <script nomodule src="https://groupui.vwapps.run/latest/static/group-ui/group-ui.js"></script>
+    <link rel="stylesheet" href="https://groupui-css.vwapps.run/latest/groupui.css" />
+
+    <title>Application Name</title>
+    <link rel="stylesheet" href="./styles/styles.css">
+    <link rel="stylesheet" href="./styles/reset.css">
+    <link rel="icon" href="./resources/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <div include-html="./common/header.html"></div>
+    <main class="main">
+        <groupui-headline>Welcome to the animal app</groupui-headline>
+        <groupui-button variant="primary" onclick="clickTest()">test</groupui-button>
+        <groupui-button variant="secondary">test2</groupui-button>
+    </main>
+    <script src="index.js"></script>
+    <script src="./common/includeHtml.js"></script>
+</body>
+
+</html>

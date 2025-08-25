@@ -1,0 +1,20 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.main {
+    padding: 2rem;
+}
+
+.card-container {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.item-creator {
+    margin-top: 4rem;
+    float: right;
+}
