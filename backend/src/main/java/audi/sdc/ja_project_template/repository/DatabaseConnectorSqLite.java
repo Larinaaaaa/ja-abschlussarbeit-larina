@@ -51,7 +51,6 @@ public class DatabaseConnectorSqLite {
         ('Review durchführen', 'Dokumentation prüfen lassen', 0, 2);
     """;
 
-
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:sqlite:database-setup/sample.db");
     }

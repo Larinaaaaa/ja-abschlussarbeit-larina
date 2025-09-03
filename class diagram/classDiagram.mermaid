@@ -9,6 +9,7 @@ classDiagram
         -String priority
         -String complexity
         -Status status
+        -List subtasks
         +addTask()
         +updateTask()
         +deleteTask()
@@ -19,8 +20,9 @@ classDiagram
         -int id
         -String name
         -String details
-        -int taskId
         -boolean completed
+        -Task task
+        +addToTask()
         +addSubTask()
         +updateSubTask()
         +deleteSubTask()
