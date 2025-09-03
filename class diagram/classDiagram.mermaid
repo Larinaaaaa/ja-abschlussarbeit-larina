@@ -1,0 +1,41 @@
+classDiagram
+    class Task {
+        -int id
+        -String name
+        -String details
+        -Date created
+        -Date dueDate
+        -String category
+        -String priority
+        -String complexity
+        -Status status
+        +addTask()
+        +updateTask()
+        +deleteTask()
+        +completeTask()
+    }
+
+    class SubTask {
+        -int id
+        -String name
+        -String details
+        -int taskId
+        -boolean completed
+        +addSubTask()
+        +updateSubTask()
+        +deleteSubTask()
+        +completeSubTask()
+    }
+
+    class Reminder {
+        -int id
+        -int taskId
+        -Date dateToRemind
+        -String message
+        +addReminder()
+        +updateReminder()
+        +deleteReminder()
+    }
+
+    Task *-- SubTask
+    Task *-- Reminder
