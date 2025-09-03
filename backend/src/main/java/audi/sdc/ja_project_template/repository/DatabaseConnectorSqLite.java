@@ -10,21 +10,26 @@ import java.sql.Statement;
 @Component
 public class DatabaseConnectorSqLite {
 
-    public static final String DROP_TABLE_STATEMENT = "DROP TABLE IF EXISTS animal;";
-    public static final String CREATE_TABLE_STATEMENT = """
-            CREATE TABLE IF NOT EXISTS animal
-            (
-                id            INTEGER PRIMARY KEY,
-                name          VARCHAR(100),
-                number_of_legs INTEGER
-            );""";
-    public static final String INSERT_INTO_STATEMENT = """ 
-            INSERT INTO animal (name, number_of_legs)
-            VALUES ('Dog', 4),
-                   ('Penguin', 2),
-                   ('Spider', 8),
-                   ('Ladybug', 6);
+    public static final String DROP_TABLE_STATEMENT = "DROP TABLE IF EXISTS task;";
+    public static final String CREATE_TASK_TABLE_STATEMENT = """
+        CREATE TABLE IF NOT EXISTS task
+        (
+            id            INTEGER PRIMARY KEY AUTOINCREMENT,
+            name          TEXT NOT NULL,
+            created       TEXT,
+            dueDate       TEXT,
+            details       TEXT,
+            category      TEXT,
+            priority      TEXT,
+            complexity    TEXT,
+            status        TEXT
+        );"""; String INSERT_TASK_STATEMENT = """
+            INSERT INTO task (name, created, dueDate, details, category, priority, complexity, status)
+            VALUES
+                ('Projekt vorbereiten', '2025-09-03', '2025-09-15', 'Projektplan erstellen und Ressourcen klären', 'Work', 'High', 'Medium', 'OPEN'),
+                ('Dokumentation schreiben', '2025-09-04', '2025-09-20', 'Technische Dokumentation erstellen', 'Work', 'Medium', 'Low', 'OPEN');
             """;
+
 
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection("jdbc:sqlite:database-setup/sample.db");
@@ -37,8 +42,8 @@ public class DatabaseConnectorSqLite {
             Statement statement = connection.createStatement();
 
             statement.executeUpdate(DROP_TABLE_STATEMENT);
-            statement.executeUpdate(CREATE_TABLE_STATEMENT);
-            statement.executeUpdate(INSERT_INTO_STATEMENT);
+            statement.executeUpdate(CREATE_TASK_TABLE_STATEMENT);
+            statement.executeUpdate(INSERT_TASK_STATEMENT);
         } catch (SQLException e) {
             // if the error message is "out of memory",
             // it probably means no database file is found
