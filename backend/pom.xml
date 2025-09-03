@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.5</version>
+        <version>3.5.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>de.audi.sdc</groupId>
@@ -43,9 +43,8 @@
             <version>3.46.1.0</version>
         </dependency>
         <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-            <version>3.4.3</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
     </dependencies>
 

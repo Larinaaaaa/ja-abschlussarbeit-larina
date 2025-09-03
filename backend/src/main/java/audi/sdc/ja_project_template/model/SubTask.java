@@ -1,7 +1,19 @@
 package audi.sdc.ja_project_template.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+
+@Entity
+@Table(name = "subtask")
 public class SubTask{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private String name;
     private String details;
     private boolean completed;
@@ -13,6 +25,8 @@ public class SubTask{
         this.details = details;
         this.completed = completed;
     }
+
+    public SubTask() {}
 
     public int getId() {
         return id;
