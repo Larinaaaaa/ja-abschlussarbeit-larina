@@ -1,10 +1,6 @@
 package audi.sdc.ja_project_template.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "subtask")
@@ -17,6 +13,8 @@ public class SubTask{
     private String name;
     private String details;
     private boolean completed;
+    @ManyToOne
+    @JoinColumn(name = "task_id")
     private Task task;
 
     public SubTask(int id, String name, String details, boolean completed) {
