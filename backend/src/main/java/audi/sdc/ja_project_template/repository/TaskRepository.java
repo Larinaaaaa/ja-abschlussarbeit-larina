@@ -10,4 +10,5 @@ import java.util.Set;
 public interface TaskRepository extends JpaRepository<Task, Integer> {
     Set<Task> findByCategory(String category);
     Set<Task> findByName(String name);
+    Set<Task> findById(int id);
 }
