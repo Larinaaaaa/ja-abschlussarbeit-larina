@@ -22,6 +22,7 @@ public class Task {
     private String category;
     private String priority;
     private String complexity;
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     private List<SubTask> subtasks = new ArrayList<>();

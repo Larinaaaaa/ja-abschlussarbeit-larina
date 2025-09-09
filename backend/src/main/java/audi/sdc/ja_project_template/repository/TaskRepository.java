@@ -9,5 +9,4 @@ import java.util.Set;
 @Repository
 public interface TaskRepository extends JpaRepository<Task, Integer> {
     Set<Task> findByCategory(String category);
-
 }
