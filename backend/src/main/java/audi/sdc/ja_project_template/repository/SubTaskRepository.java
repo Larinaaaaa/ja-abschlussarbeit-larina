@@ -9,4 +9,5 @@ import java.util.Set;
 @Repository
 public interface SubTaskRepository extends JpaRepository<SubTask, Integer> {
     Set<SubTask> findByName(String name);
+    Set<SubTask> findByTaskId(Integer id);
 }
