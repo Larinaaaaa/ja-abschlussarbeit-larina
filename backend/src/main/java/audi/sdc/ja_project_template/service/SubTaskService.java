@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class SubTaskService {
@@ -17,16 +18,16 @@ public class SubTaskService {
         this.subTaskRepository = subTaskRepository;
     }
 
-    public List<SubTask> findAll() {
-        return subTaskRepository.findAll();
+    public Set<SubTask> findAllSubTasks() {
+        return (Set<SubTask>) subTaskRepository.findAll();
     }
 
-    public List<SubTask> findByName(String name) {
-        return (List<SubTask>) subTaskRepository.findByName(name);
+    public Set<SubTask> findByName(String name) {
+        return subTaskRepository.findByName(name);
     }
 
-    public List<SubTask> findByTaskId(Integer id) {
-        return (List<SubTask>) subTaskRepository.findByTaskId(id);
+    public Set<SubTask> findByTaskId(Integer id) {
+        return subTaskRepository.findByTaskId(id);
     }
 
     public SubTask createTask(SubTask subTask) {
