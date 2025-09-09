@@ -40,5 +40,4 @@ public class SubTaskService {
     public void deleteSubTaskById(int id) {
         subTaskRepository.deleteById(id);
     }
-
 }
