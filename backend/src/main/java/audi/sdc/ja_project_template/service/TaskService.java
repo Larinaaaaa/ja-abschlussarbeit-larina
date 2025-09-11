@@ -2,7 +2,6 @@ package audi.sdc.ja_project_template.service;
 
 import audi.sdc.ja_project_template.model.Task;
 import audi.sdc.ja_project_template.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -12,7 +11,6 @@ public class TaskService {
 
     private TaskRepository taskRepository;
 
-    @Autowired
     public TaskService(TaskRepository taskRepository) {
         this.taskRepository = taskRepository;
     }
@@ -30,7 +28,8 @@ public class TaskService {
     }
 
     public Task findById(int id) {
-        return (Task) taskRepository.findById(id);
+        return (Task) taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
     }
 
     public Task createTask(Task task) {

@@ -25,7 +25,9 @@ public class Task {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SubTask> subtasks = new ArrayList<>();
+
 
     public Task(int id, String name, LocalDate dueDate, String details, String category,
                 String priority, String complexity) {

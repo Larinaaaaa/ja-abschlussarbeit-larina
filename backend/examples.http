@@ -1,6 +1,9 @@
 ### GET all animals
 GET http://localhost:8080/api/animals
 
+### GET all tasks
+GET http://localhost:8080/api/tasks
+
 ### GET an animal by its id
 GET http://localhost:8080/api/animals/2
 Accept: application/json
