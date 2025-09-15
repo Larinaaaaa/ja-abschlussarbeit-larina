@@ -3,14 +3,17 @@ package audi.sdc.ja_project_template.communication;
 import audi.sdc.ja_project_template.model.Task;
 import audi.sdc.ja_project_template.repository.NotPersistedException;
 import audi.sdc.ja_project_template.service.TaskService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Set;
 
-@RestController
+@Controller
 @RequestMapping("/api/tasks")
 public class TaskController {
 
+    @Autowired
     private final TaskService taskService;
 
     public TaskController(TaskService taskService) {

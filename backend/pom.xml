@@ -46,7 +46,7 @@
             <!--This dependency is for MySQL TODO: remove this dependency if you're using SQLite-->
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>9.1.0</version>
+            <version>9.4.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
