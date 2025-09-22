@@ -4,12 +4,14 @@ import audi.sdc.ja_project_template.model.Task;
 import audi.sdc.ja_project_template.repository.NotPersistedException;
 import audi.sdc.ja_project_template.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Set;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/api/tasks")
 public class TaskController {
 
@@ -21,7 +23,7 @@ public class TaskController {
     }
 
     @GetMapping
-    public Set<Task> get(@RequestParam(required = false) String name) {
+    public List<Task> get(@RequestParam(required = false) String name) {
         if (name == null || name.isEmpty()) {
             return taskService.findAllTasks();
         }
@@ -33,12 +35,20 @@ public class TaskController {
         return this.taskService.findById(id);
     }
 
-//    @PostMapping
-//    public ResponseEntity<Task> create(@RequestBody Task task) throws URISyntaxException {
-//        Task task = new Task(task.getId(), task.getName(), task.getCategory());
-//        Task response = this.taskService.createTask(task);
-//        return ResponseEntity.created(new URI("localhost:8080/api/tasks/" + response.id())).body(response);
-//    }
+    @PostMapping
+    public ResponseEntity<Task> create(@RequestBody Task task) throws URISyntaxException {
+        Task newTask = new Task(
+                task.getName(),
+                task.getDueDate(),
+                task.getDetails(),
+                task.getCategory(),
+                task.getPriority(),
+                task.getComplexity()
+        );
 
-
+        Task response = this.taskService.createTask(newTask);
+        return ResponseEntity.created(new URI("http://localhost:8080/api/tasks/" + response.getId()))
+                .body(response);
+    }
 }
+

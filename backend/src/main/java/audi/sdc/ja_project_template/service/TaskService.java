@@ -4,7 +4,7 @@ import audi.sdc.ja_project_template.model.Task;
 import audi.sdc.ja_project_template.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
+import java.util.List;
 
 @Service
 public class TaskService {
@@ -15,15 +15,15 @@ public class TaskService {
         this.taskRepository = taskRepository;
     }
 
-    public Set<Task> findAllTasks() {
-        return (Set<Task>) taskRepository.findAll();
+    public List<Task> findAllTasks() {
+        return taskRepository.findAll();
     }
 
-    public Set<Task> findByName(String name) {
+    public List<Task> findByName(String name) {
         return taskRepository.findByName(name);
     }
 
-    public Set<Task> findByCategory(String category) {
+    public List<Task> findByCategory(String category) {
         return taskRepository.findByCategory(category);
     }
 

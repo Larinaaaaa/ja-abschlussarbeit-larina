@@ -17,6 +17,7 @@ public class Task {
 
     private String name;
     private LocalDate created;
+    @Column(name = "due_date")
     private LocalDate dueDate;
     private String details;
     private String category;
@@ -28,9 +29,9 @@ public class Task {
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SubTask> subtasks = new ArrayList<>();
 
+    public Task() {}
 
-    public Task(int id, String name, LocalDate dueDate, String details, String category,
-                String priority, String complexity) {
+    public Task(int id, String name, String details) {
         this.id = id;
         this.name = name;
         this.created = LocalDate.now();
@@ -42,7 +43,7 @@ public class Task {
         this.status = Status.OPEN;
     }
 
-    public Task() {}
+    public Task(String name, LocalDate dueDate, String details, String category, String priority, String complexity) {}
 
     public int getId() {
         return id;

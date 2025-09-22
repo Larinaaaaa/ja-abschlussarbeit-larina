@@ -3,18 +3,12 @@ package audi.sdc.ja_project_template;
 import audi.sdc.ja_project_template.model.SubTask;
 import audi.sdc.ja_project_template.model.Task;
 
-import java.time.LocalDate;
-
 public class Main {
     public static void main(String[] args) {
         Task task = new Task(
                 1,
                 "Projekt vorbereiten",
-                LocalDate.of(2025, 9, 15),
-                "Projektplan erstellen und Ressourcen klären",
-                "Work",
-                "High",
-                "Medium"
+                "Projektplan erstellen und Ressourcen klären"
         );
 
         SubTask sub1 = new SubTask(101, "Projektplan schreiben", "Dokumentation in Confluence", true);
