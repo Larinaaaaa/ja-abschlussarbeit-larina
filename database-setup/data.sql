@@ -1,10 +1,10 @@
-GRANT ALL PRIVILEGES ON tracker_db.* TO 'accessUser'@'%' IDENTIFIED BY 'accessPassword';
-FLUSH PRIVILEGES;
 -- Datenbank erstellen und Benutzerrechte setzen
-DROP DATABASE IF EXISTS template_db;
 CREATE DATABASE IF NOT EXISTS tracker_db;
 
 USE tracker_db;
+
+# GRANT ALL PRIVILEGES ON tracker_db.* TO 'accessUser'@'%' IDENTIFIED BY 'accessPassword';
+# FLUSH PRIVILEGES;
 
 -- Alte Tabellen entfernen
 DROP TABLE IF EXISTS subtask;

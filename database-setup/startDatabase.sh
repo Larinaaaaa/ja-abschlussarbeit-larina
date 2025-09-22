@@ -2,16 +2,21 @@
 
 MARIADB_USER=accessUser
 MARIADB_PASSWORD=accessPassword
-MARIADB_ROOT_PASSWORD=rootPassword
+CONTAINER_NAME=tracker-db
 
 colima start 2> /dev/null
 
-echo "Starting Database... "
+echo "Starting Database..."
 
-docker start template-db 1> /dev/null 2> /dev/null || docker run --detach --name template-db --env MARIADB_USER=$MARIADB_USER --env MARIADB_PASSWORD=$MARIADB_PASSWORD --env MARIADB_ROOT_PASSWORD=$MARIADB_ROOT_PASSWORD -p 3306:3306 mariadb:latest 1> /dev/null
+docker start $CONTAINER_NAME 1> /dev/null 2> /dev/null
 
-sleep 10;
+# Warten, bis DB bereit ist
+until docker exec $CONTAINER_NAME mariadb -u$MARIADB_USER -p$MARIADB_PASSWORD -e "SELECT 1;" tracker_db &> /dev/null; do
+    echo "Waiting for database..."
+    sleep 2
+done
 
-docker exec -i template-db sh -c 'exec mariadb -uroot -p"$MARIADB_ROOT_PASSWORD"' < ./data.sql
+# SQL importieren
+docker exec -i $CONTAINER_NAME sh -c "exec mariadb -u$MARIADB_USER -p$MARIADB_PASSWORD tracker_db" < ./data.sql
 
 echo "Database successfully started"
