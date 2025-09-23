@@ -1,8 +1,8 @@
 ### GET all tasks
 GET http://localhost:8080/api/tasks
 
-### GET task by name
-GET http://localhost:8080/api/tasks?name=Dokumentation schreiben
+### GET task by id
+GET http://localhost:8080/api/tasks/1
 
 ### CREATE a task
 POST http://localhost:8080/api/tasks
@@ -18,32 +18,32 @@ Content-Type: application/json
   "status": "OPEN"
 }
 
-### GET an animal by its id
-GET http://localhost:8080/api/animals/2
-Accept: application/json
-
-### GET animals by name
-GET http://localhost:8080/api/animals?name=Ladybug
-Accept: application/json
-
-### CREATE an animal
-POST http://localhost:8080/api/animals
-Content-Type: application/json
-
-{
-  "name": "Tausenfuessler",
-  "numberOfLegs": 1000
-}
-
-### DELETE an animal
-DELETE http://localhost:8080/api/animals/5
-
-### UPDATE an animal
-PUT http://localhost:8080/api/animals
-Content-Type: application/json
-
-{
-  "id": 2,
-  "name": "Three legged chair",
-  "numberOfLegs": 3
-}
+#### GET an animal by its id
+#GET http://localhost:8080/api/animals/2
+#Accept: application/json
+#
+#### GET animals by name
+#GET http://localhost:8080/api/animals?name=Ladybug
+#Accept: application/json
+#
+#### CREATE an animal
+#POST http://localhost:8080/api/animals
+#Content-Type: application/json
+#
+#{
+#  "name": "Tausenfuessler",
+#  "numberOfLegs": 1000
+#}
+#
+#### DELETE an animal
+#DELETE http://localhost:8080/api/animals/5
+#
+#### UPDATE an animal
+#PUT http://localhost:8080/api/animals
+#Content-Type: application/json
+#
+#{
+#  "id": 2,
+#  "name": "Three legged chair",
+#  "numberOfLegs": 3
+#}

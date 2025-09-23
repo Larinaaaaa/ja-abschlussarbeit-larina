@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS task;
 
 -- Neue Tabellen erstellen (Entity-konform)
 CREATE TABLE task (
-                      id          INT PRIMARY KEY AUTO_INCREMENT,
+                      id          BIGINT PRIMARY KEY AUTO_INCREMENT,
                       name        VARCHAR(255) NOT NULL,
                       created     DATE,
                       due_date    DATE,
@@ -24,11 +24,11 @@ CREATE TABLE task (
 );
 
 CREATE TABLE subtask (
-                         id        INT PRIMARY KEY AUTO_INCREMENT,
+                         id        BIGINT PRIMARY KEY AUTO_INCREMENT,
                          name      VARCHAR(255) NOT NULL,
                          details   TEXT,
                          completed BOOLEAN,
-                         task_id   INT,
+                         task_id   BIGINT,
                          FOREIGN KEY (task_id) REFERENCES task(id) ON DELETE CASCADE
 );
 

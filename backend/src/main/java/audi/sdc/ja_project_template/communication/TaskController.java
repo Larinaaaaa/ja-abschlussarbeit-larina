@@ -31,8 +31,10 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public Task getTaskById(@PathVariable int id) throws NotPersistedException {
-        return this.taskService.findById(id);
+    public ResponseEntity<Task> getById(@PathVariable Long id) {
+        return taskService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping

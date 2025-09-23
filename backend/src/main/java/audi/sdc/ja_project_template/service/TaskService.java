@@ -5,6 +5,7 @@ import audi.sdc.ja_project_template.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TaskService {
@@ -27,10 +28,10 @@ public class TaskService {
         return taskRepository.findByCategory(category);
     }
 
-    public Task findById(int id) {
-        return (Task) taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Task not found with id: " + id));
+    public Optional<Task> findById(Long id) {
+        return taskRepository.findById(id);
     }
+
 
     public Task createTask(Task task) {
         return taskRepository.save(task);
@@ -40,7 +41,7 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
-    public void deleteTaskById(int id) {
+    public void deleteTaskById(Long id) {
         taskRepository.deleteById(id);
     }
 }
