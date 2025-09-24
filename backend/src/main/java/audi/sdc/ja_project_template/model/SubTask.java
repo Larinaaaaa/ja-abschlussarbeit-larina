@@ -9,7 +9,7 @@ public class SubTask{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Long id;
 
     private String name;
     private String details;
@@ -20,7 +20,7 @@ public class SubTask{
     @JsonBackReference
     private Task task;
 
-    public SubTask(int id, String name, String details, boolean completed) {
+    public SubTask(Long id, String name, String details, boolean completed) {
         this.id = id;
         this.name = name;
         this.details = details;
@@ -29,11 +29,11 @@ public class SubTask{
 
     public SubTask() {}
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

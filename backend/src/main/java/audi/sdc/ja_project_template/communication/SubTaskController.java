@@ -30,9 +30,10 @@ public class SubTaskController {
     }
 
     @GetMapping("/task/{taskId}")
-    public List<SubTask> getSubTasksByTaskId(@PathVariable Integer taskId) {
-        return subTaskService.findSubTaskById(taskId);
+    public List<SubTask> getSubTasksByTaskId(@PathVariable Long taskId) {
+        return subTaskService.findSubTasksByTaskId(taskId);
     }
+
 
     @GetMapping("/completed")
     public List<SubTask> getSubTasksByCompleted(@RequestParam boolean completed) {
@@ -46,14 +47,14 @@ public class SubTaskController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SubTask> updateSubTask(@PathVariable int id, @RequestBody SubTask updatedSubTask) {
+    public ResponseEntity<SubTask> updateSubTask(@PathVariable Long id, @RequestBody SubTask updatedSubTask) {
         updatedSubTask.setId(id); // ensure correct ID
         SubTask saved = subTaskService.updateTask(updatedSubTask);
         return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteSubTask(@PathVariable int id) {
+    public ResponseEntity<Void> deleteSubTask(@PathVariable Long id) {
         subTaskService.deleteSubTaskById(id);
         return ResponseEntity.noContent().build();
     }
