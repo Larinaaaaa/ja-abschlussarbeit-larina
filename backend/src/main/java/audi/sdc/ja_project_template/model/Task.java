@@ -1,5 +1,6 @@
 package audi.sdc.ja_project_template.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -27,7 +28,9 @@ public class Task {
     private Status status;
 
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<SubTask> subtasks = new ArrayList<>();
+
 
     public Task() {}
 

@@ -1,5 +1,6 @@
 package audi.sdc.ja_project_template.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
 @Entity
@@ -13,8 +14,10 @@ public class SubTask{
     private String name;
     private String details;
     private boolean completed;
+
     @ManyToOne
     @JoinColumn(name = "task_id")
+    @JsonBackReference
     private Task task;
 
     public SubTask(int id, String name, String details, boolean completed) {

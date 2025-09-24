@@ -1,5 +1,6 @@
 package audi.sdc.ja_project_template.communication;
 
+import audi.sdc.ja_project_template.model.Status;
 import audi.sdc.ja_project_template.model.Task;
 import audi.sdc.ja_project_template.repository.NotPersistedException;
 import audi.sdc.ja_project_template.service.TaskService;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -39,16 +41,11 @@ public class TaskController {
 
     @PostMapping
     public ResponseEntity<Task> create(@RequestBody Task task) throws URISyntaxException {
-        Task newTask = new Task(
-                task.getName(),
-                task.getDueDate(),
-                task.getDetails(),
-                task.getCategory(),
-                task.getPriority(),
-                task.getComplexity()
-        );
-
-        Task response = this.taskService.createTask(newTask);
+        task.setCreated(LocalDate.now());
+        if (task.getStatus() == null) {
+            task.setStatus(Status.OPEN);
+        }
+        Task response = this.taskService.createTask(task);
         return ResponseEntity.created(new URI("http://localhost:8080/api/tasks/" + response.getId()))
                 .body(response);
     }
