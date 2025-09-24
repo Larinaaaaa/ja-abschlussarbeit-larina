@@ -5,6 +5,7 @@ import audi.sdc.ja_project_template.repository.SubTaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -17,16 +18,20 @@ public class SubTaskService {
         this.subTaskRepository = subTaskRepository;
     }
 
-    public Set<SubTask> findAllSubTasks() {
-        return (Set<SubTask>) subTaskRepository.findAll();
+    public List<SubTask> findAllSubTasks() {
+        return subTaskRepository.findAll();
     }
 
-    public Set<SubTask> findByName(String name) {
+    public List<SubTask> findByName(String name) {
         return subTaskRepository.findByName(name);
     }
 
-    public Set<SubTask> findByTaskId(Integer id) {
+    public List<SubTask> findSubTaskById(Integer id) {
         return subTaskRepository.findByTaskId(id);
+    }
+
+    public List<SubTask> findByCompleted(boolean completed) {
+        return subTaskRepository.findByCompleted(completed);
     }
 
     public SubTask createTask(SubTask subTask) {
