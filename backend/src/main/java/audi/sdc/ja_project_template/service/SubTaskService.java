@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class SubTaskService {
@@ -46,11 +45,11 @@ public class SubTaskService {
         return subTaskRepository.findByCompleted(completed);
     }
 
-    public SubTask createTask(SubTask subTask) {
+    public SubTask createSubTask(SubTask subTask) {
         return subTaskRepository.save(subTask);
     }
 
-    public SubTask updateTask(SubTask subTask) {
+    public SubTask updateSubTask(SubTask subTask) {
         return subTaskRepository.save(subTask);
     }
 

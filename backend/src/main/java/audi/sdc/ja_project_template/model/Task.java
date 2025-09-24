@@ -31,7 +31,6 @@ public class Task {
     @JsonManagedReference
     private List<SubTask> subtasks = new ArrayList<>();
 
-
     public Task() {}
 
     public Task(Long id, String name, String details) {
@@ -118,11 +117,6 @@ public class Task {
 
     public void setStatus(Status status) {
         this.status = status;
-    }
-
-    public void addSubtask(SubTask subTask) {
-        subTask.setTask(this);
-        subtasks.add(subTask);
     }
 
     public List<SubTask> getSubtasks() {

@@ -41,7 +41,6 @@ public class SubTaskController {
         return subTaskService.findSubTasksByTaskId(taskId);
     }
 
-
     @GetMapping("/completed")
     public List<SubTask> getSubTasksByCompleted(@RequestParam boolean completed) {
         return subTaskService.findByCompleted(completed);
@@ -49,14 +48,14 @@ public class SubTaskController {
 
     @PostMapping
     public ResponseEntity<SubTask> createSubTask(@RequestBody SubTask subTask) {
-        SubTask created = subTaskService.createTask(subTask);
+        SubTask created = subTaskService.createSubTask(subTask);
         return ResponseEntity.ok(created);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<SubTask> updateSubTask(@PathVariable Long id, @RequestBody SubTask updatedSubTask) {
         updatedSubTask.setId(id); // ensure correct ID
-        SubTask saved = subTaskService.updateTask(updatedSubTask);
+        SubTask saved = subTaskService.updateSubTask(updatedSubTask);
         return ResponseEntity.ok(saved);
     }
 
