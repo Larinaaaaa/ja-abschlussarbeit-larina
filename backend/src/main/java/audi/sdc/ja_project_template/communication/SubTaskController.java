@@ -1,100 +1,60 @@
 package audi.sdc.ja_project_template.communication;
 
-import audi.sdc.ja_project_template.model.Status;
-import audi.sdc.ja_project_template.model.Task;
+import audi.sdc.ja_project_template.model.SubTask;
 import audi.sdc.ja_project_template.service.SubTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/tasks")
+@RequestMapping("/api/subtasks")
 public class SubTaskController {
 
-    @Autowired
     private final SubTaskService subTaskService;
 
+    @Autowired
     public SubTaskController(SubTaskService subTaskService) {
         this.subTaskService = subTaskService;
     }
 
     @GetMapping
-    public List<Task> getAllTasks() {
+    public List<SubTask> getAllSubTasks() {
         return subTaskService.findAllSubTasks();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Task> getTasksById(@PathVariable Long id) {
-        return subTaskService.findById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
-    }
-
-    @GetMapping("/name")
-    public List<Task> getTasksByName(@RequestParam String name) {
+    @GetMapping("/search")
+    public List<SubTask> getSubTasksByName(@RequestParam String name) {
         return subTaskService.findByName(name);
     }
 
-    @GetMapping("/category")
-    public List<Task> getTasksByCategory(@RequestParam String category) {
-        return subTaskService.findByCategory(category);
+    @GetMapping("/task/{taskId}")
+    public List<SubTask> getSubTasksByTaskId(@PathVariable Integer taskId) {
+        return subTaskService.findSubTaskById(taskId);
     }
 
-    @GetMapping("/priority")
-    public List<Task> getTasksByPriority(@RequestParam String priority) {
-        return subTaskService.findByPriority(priority);
-    }
-
-    @GetMapping("/complexity")
-    public List<Task> getTasksByComplexity(@RequestParam String complexity) {
-        return subTaskService.findByComplexity(complexity);
-    }
-
-    @GetMapping("/status")
-    public List<Task> getTasksByStatus(@RequestParam Status status) {
-        return subTaskService.findByStatus(status);
+    @GetMapping("/completed")
+    public List<SubTask> getSubTasksByCompleted(@RequestParam boolean completed) {
+        return subTaskService.findByCompleted(completed);
     }
 
     @PostMapping
-    public ResponseEntity<Task> createTask(@RequestBody Task task) throws URISyntaxException {
-        task.setCreated(LocalDate.now());
-        if (task.getStatus() == null) {
-            task.setStatus(Status.OPEN);
-        }
-        Task response = this.subTaskService.createTask(task);
-        return ResponseEntity.created(new URI("http://localhost:8080/api/tasks/" + response.getId()))
-                .body(response);
+    public ResponseEntity<SubTask> createSubTask(@RequestBody SubTask subTask) {
+        SubTask created = subTaskService.createTask(subTask);
+        return ResponseEntity.ok(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
-        return subTaskService.findById(id)
-                .map(existingTask -> {
-                    existingTask.setName(updatedTask.getName());
-                    existingTask.setDueDate(updatedTask.getDueDate());
-                    existingTask.setDetails(updatedTask.getDetails());
-                    existingTask.setCategory(updatedTask.getCategory());
-                    existingTask.setPriority(updatedTask.getPriority());
-                    existingTask.setComplexity(updatedTask.getComplexity());
-                    existingTask.setStatus(updatedTask.getStatus());
-                    Task saved = subTaskService.updateTask(existingTask);
-                    return ResponseEntity.ok(saved);
-                })
-                .orElse(ResponseEntity.notFound().build());
+    public ResponseEntity<SubTask> updateSubTask(@PathVariable int id, @RequestBody SubTask updatedSubTask) {
+        updatedSubTask.setId(id); // ensure correct ID
+        SubTask saved = subTaskService.updateTask(updatedSubTask);
+        return ResponseEntity.ok(saved);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
-        if (subTaskService.findById(id).isPresent()) {
-            subTaskService.deleteTaskById(id);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Void> deleteSubTask(@PathVariable int id) {
+        subTaskService.deleteSubTaskById(id);
+        return ResponseEntity.noContent().build();
     }
 }
