@@ -17,3 +17,17 @@ Content-Type: application/json
   "completed": 0,
   "taskId": 1
 }
+
+### UPDATE a subtask
+PUT http://localhost:8080/api/subtasks/1
+Content-Type: application/json
+
+{
+"name": "Projektplan schreiben (aktualisiert)",
+"details": "Dokumentation in Confluence überarbeiten",
+"completed": true,
+"taskId": 1
+}
+
+### DELETE a subtask
+DELETE http://localhost:8080/api/subtasks/1

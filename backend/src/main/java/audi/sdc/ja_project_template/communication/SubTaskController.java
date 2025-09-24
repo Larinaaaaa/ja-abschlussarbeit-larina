@@ -24,7 +24,14 @@ public class SubTaskController {
         return subTaskService.findAllSubTasks();
     }
 
-    @GetMapping("/search")
+    @GetMapping("/{id}")
+    public ResponseEntity<SubTask> getSubTaskById(@PathVariable Long id) {
+        return subTaskService.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/name")
     public List<SubTask> getSubTasksByName(@RequestParam String name) {
         return subTaskService.findByName(name);
     }
