@@ -43,11 +43,15 @@ Content-Type: application/json
 DELETE http://localhost:8080/api/tasks/3
 
 ### UPDATE a task
-PUT http://localhost:8080/api/tasks
+PUT http://localhost:8080/api/tasks/2
 Content-Type: application/json
 
 {
-  "id": 2,
-  "name": "Dokumentation verfassen",
-  "status": "DONE"
+  "name": "Projekt vorbereiten (aktualisiert)",
+  "dueDate": "2025-09-18",
+  "details": "Projektplan überarbeiten",
+  "category": "Work",
+  "priority": "High",
+  "complexity": "Medium",
+  "status": "OPEN"
 }

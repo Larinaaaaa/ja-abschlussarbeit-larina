@@ -70,5 +70,32 @@ public class TaskController {
         return ResponseEntity.created(new URI("http://localhost:8080/api/tasks/" + response.getId()))
                 .body(response);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task updatedTask) {
+        return taskService.findById(id)
+                .map(existingTask -> {
+                    existingTask.setName(updatedTask.getName());
+                    existingTask.setDueDate(updatedTask.getDueDate());
+                    existingTask.setDetails(updatedTask.getDetails());
+                    existingTask.setCategory(updatedTask.getCategory());
+                    existingTask.setPriority(updatedTask.getPriority());
+                    existingTask.setComplexity(updatedTask.getComplexity());
+                    existingTask.setStatus(updatedTask.getStatus());
+                    Task saved = taskService.updateTask(existingTask);
+                    return ResponseEntity.ok(saved);
+                })
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+        if (taskService.findById(id).isPresent()) {
+            taskService.deleteTaskById(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }
 
