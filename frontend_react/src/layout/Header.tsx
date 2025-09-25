@@ -10,6 +10,9 @@ function Header() {
                 <div className="logo-container">
                     <img className="logo" src="/audi-fav.svg"></img>
                 </div>
+                <div className="text-container">
+                    <p>AudiTrack</p>
+                </div>
                 <NavigationBar id="nav-bar" selected="overview" onSelect={() => {}}>
                     <NavigationItem id="overview">Overview</NavigationItem>
                 </NavigationBar>
