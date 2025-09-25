@@ -1,4 +1,4 @@
-import { Button, Divider, Layout, NavigationBar, NavigationItem } from '@audi/audi-ui-react';
+import { Divider, Layout, NavigationBar, NavigationItem, Text } from '@audi/audi-ui-react';
 import './Header.css'
 
 
@@ -7,9 +7,12 @@ function Header() {
     return (
         <div className="header">
             <Layout justify="around" align="center">
-                <div className="text-container">
-                    <p>AudiTrack</p>
-                </div>
+                <Text
+                    as="h3"
+                    variant="order3"
+                >
+                    Azubi Track&Check
+                </Text>
                 <NavigationBar id="nav-bar" selected="overview" onSelect={() => {}}>
                     <NavigationItem id="overview">Übersicht</NavigationItem>
                     <NavigationItem id="canban">Canban Board</NavigationItem>
