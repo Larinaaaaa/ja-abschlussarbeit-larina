@@ -1,4 +1,5 @@
 import { SubTask } from './SubTask.ts'
+import {Status} from "./Status.ts";
 
 export interface Task {
     id: number
@@ -11,11 +12,4 @@ export interface Task {
     complexity: string
     status: Status
     subtasks: SubTask[]
-}
-
-export enum Status {
-    TODO = "TODO",
-    IN_PROGRESS = "IN_PROGRESS",
-    DONE = "DONE",
-    CANCELLED = "CANCELLED"
 }
