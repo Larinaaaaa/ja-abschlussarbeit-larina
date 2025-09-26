@@ -41,9 +41,26 @@ const Overview: React.FC<OverviewProps> = ({ tasks }) => {
                 >
                     <div className="accordion-content">
                         <Text variant="copy1">{task.details}</Text>
+
+                        {/* SubTasks anzeigen */}
+                        {task.subtasks && task.subtasks.length > 0 && (
+                            <div className="subtasks">
+                                {task.subtasks.map(sub => (
+                                    <div key={sub.id} className="subtask-item">
+                                        <Checkbox
+                                            inputId={`subtask-${sub.id}`}
+                                            checked={sub.completed}
+                                            onChange={() => {}}
+                                        />
+                                        <span>{sub.name}</span>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </AccordionSection>
             ))}
+
         </Accordion>
     )
 }

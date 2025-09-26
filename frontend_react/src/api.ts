@@ -24,3 +24,20 @@ export async function loadSubTasks(): Promise<SubTask[]>{
         return Promise.resolve(subTasks);
     }
 }
+
+export async function loadTasksWithSubtasks(): Promise<Task[]> {
+    try {
+        const [tasks, subtasks] = await Promise.all([loadTasks(), loadSubTasks()]);
+
+        // SubTasks den jeweiligen Tasks zuordnen
+        const tasksWithSubtasks = tasks.map(task => ({
+            ...task,
+            subtasks: subtasks.filter(st => st.taskId === task.id) // taskId muss im SubTask existieren
+        }));
+
+        return tasksWithSubtasks;
+    } catch (e) {
+        console.error(e);
+        return [];
+    }
+}
