@@ -9,6 +9,7 @@ function Header() {
             <Layout justify="around" align="center">
                 <Text
                     as="h3"
+                    weight="bold"
                     variant="order3"
                 >
                     Azubi Track&Check

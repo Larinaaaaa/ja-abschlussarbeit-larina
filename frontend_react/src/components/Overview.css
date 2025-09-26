@@ -12,7 +12,7 @@
 .accordion-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .overview-container {
@@ -43,7 +43,11 @@
 }
 
 .overview-column h1 {
+    background-color: black;
     text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: white;
 }
 
 .overview-column h3 {
@@ -54,4 +58,10 @@
 html, body, #root {
     height: 100%;
     margin: 0;
+}
+
+.subtask-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
 }

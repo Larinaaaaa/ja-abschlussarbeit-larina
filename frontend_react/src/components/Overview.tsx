@@ -37,10 +37,9 @@ const Overview: React.FC<OverviewProps> = ({tasks}) => {
         <div className="overview-container">
             {categories.map(category => (
                 <div key={category} className="overview-column">
-                    <Text as="h1" variant="order3">
+                    <Text as="h1" weight="bold" variant="order4">
                         {category === "SONSTIGE" ? "Sonstige" : category}
                 </Text>
-                   <br />
                     <Accordion>
                         {categorizedTasks[category].map(task => (
                             <AccordionSection
@@ -58,12 +57,11 @@ const Overview: React.FC<OverviewProps> = ({tasks}) => {
                                             checked={!!completedTasks[task.id]}
                                             onChange={() => handleCheckboxChange(task.id)}
                                         />
-                                        <span>{task.name}</span>
+                                        <Text variant="order4" weight="bold">{task.name}</Text>
                                     </div>
                                 }
                             >
                                 <div className="accordion-content">
-                                    <Text variant="copy1">{task.details}</Text>
                                     {task.subtasks && task.subtasks.length > 0 && (
                                         <div className="subtasks">
                                             {task.subtasks.map(sub => (
@@ -73,7 +71,7 @@ const Overview: React.FC<OverviewProps> = ({tasks}) => {
                                                         checked={sub.completed}
                                                         onChange={() => {}}
                                                     />
-                                                    <span>{sub.name}</span>
+                                                    <Text variant="copy1">{sub.name}</Text>
                                                 </div>
                                             ))}
                                         </div>
