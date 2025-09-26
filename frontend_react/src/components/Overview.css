@@ -1,4 +1,9 @@
-.grade-card {
-    margin: 4rem 0;
-    padding: 2rem !important;
+.task-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.accordion-content {
+    padding: 8px 0;
 }

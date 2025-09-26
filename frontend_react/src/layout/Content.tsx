@@ -1,38 +1,35 @@
 import './Content.css';
 import Overview from "../components/Overview";
-import {Animals} from "../model/Animals.ts";
+import {Task} from "../model/Task.ts";
 import {ContentCard, Text} from "@audi/audi-ui-react";
 
 interface ContentProps {
   activeModule: string;
-  animals: Animals[];
+  tasks: Task[];
 }
 
-const renderContent = (activeModule: string, animals: Animals[]) => {
-  switch (activeModule) {
-    case 'overview':
-      return <Overview animals={animals} />;
-    default:
-      return <ContentCard>
-        <Text variant="order3" spaceStackEnd="xxs">
-          This is a default
-        </Text>
-        <Text variant="copy1">
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
-          eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
-          voluptua.
-        </Text>
-
-      </ContentCard>;
-  }
+const renderContent = (activeModule: string, tasks: Task[]) => {
+    switch (activeModule) {
+        case 'overview':
+            return <Overview tasks={tasks}></Overview>;
+        default:
+            return (
+                <ContentCard>
+                    <Text variant="order3" spaceStackEnd="xxs">This is a default</Text>
+                    <Text variant="copy1">
+                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr...
+                    </Text>
+                </ContentCard>
+            );
+    }
 }
 
-function Content(props: ContentProps) {
-  return (
-    <div className="content">
-      {renderContent(props.activeModule, props.animals)}
-    </div>
-  );
+function Content({ activeModule, tasks }: ContentProps) {
+    return (
+        <div className="content">
+            {renderContent(activeModule, tasks)}
+        </div>
+    );
 }
 
 export default Content;

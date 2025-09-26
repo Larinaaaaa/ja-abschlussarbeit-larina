@@ -13,14 +13,28 @@ function Header() {
                 >
                     Azubi Track&Check
                 </Text>
-                <NavigationBar id="nav-bar" selected="overview" onSelect={() => {}}>
-                    <NavigationItem id="overview">Übersicht</NavigationItem>
-                    <NavigationItem id="canban">Canban Board</NavigationItem>
-                    <NavigationItem id="week">Wochenansicht</NavigationItem>
-                    <div style={{ marginLeft: '50px' }}>
+                <div className="centered-navbar">
+                    <NavigationBar
+                        aria-label="Aria Label"
+                        id="nav-bar__basic"
+                        onSelect={() => {}}
+                        selected="overview"
+                    >
+                        <NavigationItem id="overview">Übersicht</NavigationItem>
+                        <NavigationItem id="canban">Canban Board</NavigationItem>
+                        <NavigationItem id="week">Wochenansicht</NavigationItem>
+                    </NavigationBar>
+                </div>
+                <div className={"header-backlog"}>
+                    <NavigationBar
+                        aria-label="Aria Label"
+                        id="nav-bar__basic"
+                        onSelect={() => {}}
+                        selected="overview"
+                    >
                         <NavigationItem id="backlog">Backlog</NavigationItem>
-                    </div>
-                </NavigationBar>
+                    </NavigationBar>
+                </div>
                 <div className="logo-container">
                     <img className="logo" src="/audi-fav.svg"></img>
                 </div>

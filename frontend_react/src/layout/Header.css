@@ -1,6 +1,7 @@
 .header {
     width: 100vw;
     height: 75px;
+    background-color: #ffffff;
 }
 
 .header .logo {
@@ -28,6 +29,12 @@
     text-align: center;
 }
 
+.header h3,
+.header .audi-ui-text {
+    color: #000000;
+    margin-left: 150px;
+}
+
 dialog {
     position: fixed;
     margin: auto;
@@ -35,4 +42,14 @@ dialog {
 
 .dialog-buttons {
     float: right;
+}
+
+.centered-navbar {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.header-backlog {
+    margin-right: 30px;
 }

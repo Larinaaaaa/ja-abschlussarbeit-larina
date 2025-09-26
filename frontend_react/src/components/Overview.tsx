@@ -1,73 +1,49 @@
-// Overview.tsx
 import './Overview.css'
 import { Accordion, AccordionSection, Text, Checkbox } from '@audi/audi-ui-react'
 import { useState } from 'react'
+import { Task } from '../model/Task'
 
-const Overview = () => {
+interface OverviewProps {
+    tasks: Task[]
+}
 
-    const [tasksCompleted, setTasksCompleted] = useState({
-        api: false,
-        docs: false,
-    })
+const Overview: React.FC<OverviewProps> = ({ tasks }) => {
+    const [completedTasks, setCompletedTasks] = useState<Record<number, boolean>>({})
 
-    const handleCheckboxChange = (taskKey: keyof typeof tasksCompleted) => {
-        setTasksCompleted(prev => ({
+    const handleCheckboxChange = (taskId: number) => {
+        setCompletedTasks(prev => ({
             ...prev,
-            [taskKey]: !prev[taskKey],
+            [taskId]: !prev[taskId],
         }))
     }
 
     return (
         <Accordion>
-            <AccordionSection
-                headingLevel="h2"
-                hint="Diese Woche fällig"
-                hintSeverity="informative"
-                id="section-6__with-role-region"
-                roleRegion
-                subline="Eine Schnittstelle aufbauen um System 1 und 2 kommunizieren zu lassen"
-                label={
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Checkbox
-                            inputId="checkbox-api"
-                            checked={tasksCompleted.api}
-                            onChange={() => handleCheckboxChange('api')}
-                        />
-                        <span>API Schnittstelle</span>
+            {tasks.map(task => (
+                <AccordionSection
+                    key={task.id}
+                    headingLevel="h2"
+                    hint={`Fällig am ${task.dueDate}`}
+                    hintSeverity="informative"
+                    id={`task-${task.id}`}
+                    roleRegion
+                    subline={task.details}
+                    label={
+                        <div className="task-label">
+                            <Checkbox
+                                inputId={`checkbox-${task.id}`}
+                                checked={!!completedTasks[task.id]}
+                                onChange={() => handleCheckboxChange(task.id)}
+                            />
+                            <span>{task.name}</span>
+                        </div>
+                    }
+                >
+                    <div className="accordion-content">
+                        <Text variant="copy1">{task.details}</Text>
                     </div>
-                }
-            >
-                <div className="accordion-content">
-                    <Text variant="copy1">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr...
-                    </Text>
-                </div>
-            </AccordionSection>
-
-            <AccordionSection
-                headingLevel="h2"
-                hint="In 2 Wochen fällig"
-                hintSeverity="positive"
-                id="section-7__with-role-region"
-                roleRegion
-                subline="Fortschritte vom Projekt 'Projekt abc' dokumentieren"
-                label={
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <Checkbox
-                            inputId="checkbox-api"
-                            checked={tasksCompleted.api}
-                            onChange={() => handleCheckboxChange('api')}
-                        />
-                        <span>Dokumentation verfassen</span>
-                    </div>
-                }
-            >
-                <div className="accordion-content">
-                    <Text variant="copy1">
-                        Lorem ipsum dolor sit amet, consetetur sadipscing elitr...
-                    </Text>
-                </div>
-            </AccordionSection>
+                </AccordionSection>
+            ))}
         </Accordion>
     )
 }
