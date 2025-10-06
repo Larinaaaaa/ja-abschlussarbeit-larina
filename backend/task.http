@@ -33,7 +33,7 @@ Content-Type: application/json
   "created": "2025-09-24",
   "dueDate": "2025-09-30",
   "details": "Abschlussbericht schreiben und finalisieren",
-  "category": "Work",
+  "category": "VS",
   "priority": "High",
   "complexity": "Medium",
   "status": "OPEN"
@@ -50,7 +50,7 @@ Content-Type: application/json
   "name": "Projekt vorbereiten (aktualisiert)",
   "dueDate": "2025-09-18",
   "details": "Projektplan überarbeiten",
-  "category": "Work",
+  "category": "VS",
   "priority": "High",
   "complexity": "Medium",
   "status": "OPEN"
