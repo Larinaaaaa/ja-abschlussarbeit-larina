@@ -39,7 +39,11 @@ VALUES
      'Projektplan erstellen und Ressourcen klären', 'VS', 'High', 'Medium', 'OPEN'),
 
     ('Dokumentation schreiben', '2025-09-04', '2025-09-20',
-     'Technische Dokumentation erstellen', 'BIZ', 'Medium', 'Low', 'OPEN'),
+     'Technische Dokumentation erstellen', 'VS', 'Medium', 'Low', 'OPEN'),
+
+    ('Hybridkurs Aufgaben', '2025-09-04', '2025-09-20',
+     'Aufgaben zu Algorithmen erledigen', 'BIZ', 'High', 'Low', 'OPEN'),
+
 
     ('TNO schreiben', '2025-09-18', '2025-09-20',
     'Berufsschule nachtragen', 'SONSTIGES', 'Low', 'Low', 'OPEN');
