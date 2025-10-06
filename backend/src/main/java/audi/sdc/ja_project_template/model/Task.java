@@ -15,15 +15,18 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String name;
     private LocalDate created;
+
     @Column(name = "due_date")
     private LocalDate dueDate;
     private String details;
-    private String category;
+
+    @Enumerated(EnumType.STRING)
+    private Category category;
     private String priority;
     private String complexity;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -45,7 +48,7 @@ public class Task {
         this.status = Status.OPEN;
     }
 
-    public Task(String name, LocalDate dueDate, String details, String category, String priority, String complexity) {}
+    public Task(String name, LocalDate dueDate, String details, Category category, String priority, String complexity) {}
 
     public Long getId() {
         return id;
@@ -87,11 +90,11 @@ public class Task {
         this.details = details;
     }
 
-    public String getCategory() {
+    public Category getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(Category category) {
         this.category = category;
     }
 

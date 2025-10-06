@@ -1,5 +1,6 @@
 package audi.sdc.ja_project_template.service;
 
+import audi.sdc.ja_project_template.model.Category;
 import audi.sdc.ja_project_template.model.Status;
 import audi.sdc.ja_project_template.model.Task;
 import audi.sdc.ja_project_template.repository.TaskRepository;
@@ -29,7 +30,7 @@ public class TaskService {
         return taskRepository.findByName(name);
     }
 
-    public List<Task> findByCategory(String category) {
+    public List<Task> findByCategory(Category category) {
         return taskRepository.findByCategory(category);
     }
 

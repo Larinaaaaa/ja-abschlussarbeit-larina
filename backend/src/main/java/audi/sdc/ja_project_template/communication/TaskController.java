@@ -1,5 +1,6 @@
 package audi.sdc.ja_project_template.communication;
 
+import audi.sdc.ja_project_template.model.Category;
 import audi.sdc.ja_project_template.model.Status;
 import audi.sdc.ja_project_template.model.Task;
 import audi.sdc.ja_project_template.service.TaskService;
@@ -41,7 +42,7 @@ public class TaskController {
     }
 
     @GetMapping("/category")
-    public List<Task> getTasksByCategory(@RequestParam String category) {
+    public List<Task> getTasksByCategory(@RequestParam Category category) {
         return taskService.findByCategory(category);
     }
 
