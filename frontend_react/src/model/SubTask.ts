@@ -3,4 +3,5 @@ export interface SubTask {
     name: string
     details: string
     completed: boolean
+    taskId: number
 }

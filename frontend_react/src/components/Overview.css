@@ -30,6 +30,8 @@
     flex-direction: column;
     box-sizing: border-box;
     position: relative;
+    border-left: 1px solid #dcdcdc;
+    border-right: 1px solid #dcdcdc;
 }
 
 .overview-column + .overview-column::before {
@@ -37,9 +39,8 @@
     position: absolute;
     left: 0;
     top: 0;
-    width: 1px;
     height: 100%;
-    background-color: #e0e0e0;
+    background-color: #dcdcdc;
 }
 
 .overview-column h1 {

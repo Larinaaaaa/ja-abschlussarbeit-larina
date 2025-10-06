@@ -2,7 +2,7 @@ import './App.css'
 import {Layout} from '@audi/audi-ui-react'
 import Content from "./layout/Content";
 import Header from "./layout/Header";
-import {loadTasks} from "./api";
+import {loadTasks} from "./service/task-api.ts";
 import {useEffect, useState} from "react";
 import {Task} from "./model/Task";
 
