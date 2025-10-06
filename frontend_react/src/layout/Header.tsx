@@ -1,4 +1,4 @@
-import { Divider, Layout, NavigationBar, NavigationItem, Text } from '@audi/audi-ui-react';
+import {Divider, Layout, NavigationBar, NavigationItem, Text} from '@audi/audi-ui-react';
 import './Header.css'
 
 
