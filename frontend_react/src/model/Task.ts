@@ -1,5 +1,6 @@
 import { SubTask } from './SubTask.ts'
 import {Status} from "./Status.ts";
+import {Category} from "./Category.ts";
 
 export interface Task {
     id: number
@@ -7,7 +8,7 @@ export interface Task {
     created: string
     dueDate: string
     details: string
-    category: string
+    category: Category
     priority: string
     complexity: string
     status: Status

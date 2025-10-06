@@ -46,7 +46,7 @@ VALUES
 
 
     ('TNO schreiben', '2025-09-18', '2025-09-20',
-    'Berufsschule nachtragen', 'SONSTIGES', 'Low', 'Low', 'OPEN');
+    'Berufsschule nachtragen', 'SONSTIGE', 'Low', 'Low', 'OPEN');
 
 INSERT INTO subtask (name, details, completed, task_id)
 VALUES

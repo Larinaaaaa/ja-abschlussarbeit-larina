@@ -2,6 +2,9 @@ import './Overview.css'
 import {Accordion, AccordionSection, Text, Checkbox} from '@audi/audi-ui-react'
 import {useState} from 'react'
 import {Task} from '../model/Task'
+import {Category} from "../model/Category.ts";
+
+const categories = Object.values(Category);
 
 interface OverviewProps {
     tasks: Task[]
@@ -17,20 +20,25 @@ const Overview: React.FC<OverviewProps> = ({tasks}) => {
         }))
     }
 
-    const categories = ["BIZ", "VS", "SONSTIGE"] as const;
+    const categorizedTasks: Record<Category, Task[]> = {
+        [Category.BIZ]: [],
+        [Category.VS]: [],
+        [Category.SONSTIGE]: [],
+    };
 
-    const categorizedTasks: Record<string, Task[]> = {
-        BIZ: [],
-        VS: [],
-        SONSTIGE: [],
+    const categoryLabels: Record<Category, string> = {
+        [Category.BIZ]: "BIZ",
+        [Category.VS]: "Versetzungsstelle",
+        [Category.SONSTIGE]: "Sonstige",
     };
 
     tasks.forEach(task => {
-        if (categories.includes(task.category as any)) {
-            categorizedTasks[task.category].push(task);
+        if (categories.includes(task.category as Category)) {
+            categorizedTasks[task.category as Category].push(task);
         } else {
-            categorizedTasks["SONSTIGE"].push(task);
+            categorizedTasks[Category.SONSTIGE].push(task);
         }
+
     });
 
     return (
@@ -38,7 +46,7 @@ const Overview: React.FC<OverviewProps> = ({tasks}) => {
             {categories.map(category => (
                 <div key={category} className="overview-column">
                     <Text as="h1" weight="bold" variant="order4">
-                        {category === "SONSTIGE" ? "Sonstige" : category}
+                        {categoryLabels[category as Category]}
                 </Text>
                     <Accordion>
                         {categorizedTasks[category].map(task => (
