@@ -36,10 +36,13 @@ CREATE TABLE subtask (
 INSERT INTO task (name, created, due_date, details, category, priority, complexity, status)
 VALUES
     ('Projekt vorbereiten', '2025-09-03', '2025-09-15',
-     'Projektplan erstellen und Ressourcen klären', 'Work', 'High', 'Medium', 'OPEN'),
+     'Projektplan erstellen und Ressourcen klären', 'VS', 'High', 'Medium', 'OPEN'),
 
     ('Dokumentation schreiben', '2025-09-04', '2025-09-20',
-     'Technische Dokumentation erstellen', 'Work', 'Medium', 'Low', 'OPEN');
+     'Technische Dokumentation erstellen', 'BIZ', 'Medium', 'Low', 'OPEN'),
+
+    ('TNO schreiben', '2025-09-18', '2025-09-20',
+    'Berufsschule nachtragen', 'SONSTIGES', 'Low', 'Low', 'OPEN');
 
 INSERT INTO subtask (name, details, completed, task_id)
 VALUES
