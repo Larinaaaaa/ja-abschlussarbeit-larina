@@ -1,30 +1,36 @@
 import {Task} from "../model/Task.ts";
-import {loadSubTasks} from "./subtask-api.ts";
 
-export async function loadTasks(): Promise<Task[]>{
-    const tasks: Task[] = ([]) as Task[];
+export async function loadTasks(): Promise<Task[]> {
     try {
         const response = await fetch('http://localhost:8080/api/tasks');
-        return await response.json();
 
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const tasks = await response.json();
+        return tasks as Task[];
     } catch (e) {
-        console.error(e);
-        return Promise.resolve(tasks);
+        console.error("Fehler beim laden der Aufgaben: ", e);
+        return [];
     }
 }
 
-export async function loadTasksWithSubtasks(): Promise<Task[]> {
+export async function createTask(task: Omit<Task, "id">): Promise<Task> {
     try {
-        const [tasks, subtasks] = await Promise.all([loadTasks(), loadSubTasks()]);
+        const response = await fetch('http://localhost:8080/api/tasks', {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(task),
+        });
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
 
-        const tasksWithSubtasks = tasks.map(task => ({
-            ...task,
-            subtasks: subtasks.filter(st => st.taskId === task.id)
-        }));
-
-        return tasksWithSubtasks;
+        const createdTask: Task = await response.json();
+        return createdTask;
     } catch (e) {
-        console.error(e);
-        return [];
+        console.error("Fehler beim erstellen der Aufgabe: ", e);
+        throw e
     }
 }
