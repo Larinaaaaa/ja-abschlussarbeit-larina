@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import {Divider, Layout, NavigationBar, NavigationItem, Text} from '@audi/audi-ui-react';
 import './Header.css'
 
@@ -21,7 +22,7 @@ function Header() {
                         onSelect={() => {}}
                         selected="overview"
                     >
-                        <NavigationItem id="overview">Übersicht</NavigationItem>
+                        <Link to="/overview"><NavigationItem id="overview">Übersicht</NavigationItem></Link>
                         <NavigationItem id="canban">Canban Board</NavigationItem>
                         <NavigationItem id="week">Wochenansicht</NavigationItem>
                     </NavigationBar>

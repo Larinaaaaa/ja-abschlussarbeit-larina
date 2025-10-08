@@ -1,6 +1,6 @@
 import './Content.css';
-import Overview from "../components/Overview";
-import {Task} from "../model/Task.ts";
+import Overview from "../pages/overview/Overview.tsx";
+import {Task} from "../../model/Task.ts";
 import {ContentCard, Text} from "@audi/audi-ui-react";
 
 interface ContentProps {
