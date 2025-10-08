@@ -28,7 +28,7 @@ CREATE TABLE subtask
 (
     id        BIGINT PRIMARY KEY AUTO_INCREMENT,
     name      VARCHAR(255) NOT NULL,
-    completed BOOLEAN,
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
     task_id   BIGINT,
     FOREIGN KEY (task_id) REFERENCES task (id) ON DELETE CASCADE
 );

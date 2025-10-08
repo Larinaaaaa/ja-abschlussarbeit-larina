@@ -1,7 +1,7 @@
 import {SubTask} from "../model/SubTask.ts";
 
 export async function loadSubTasks(): Promise<SubTask[]> {
-    const subTasks: SubTask[] = ([]) as SubTask[];
+    const subTasks: SubTask[] = [];
     try {
         const response = await fetch('http://localhost:8080/api/subtasks');
         return await response.json();
