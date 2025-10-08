@@ -54,7 +54,7 @@ public class SubTaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<SubTask> updateSubTask(@PathVariable Long id, @RequestBody SubTask updatedSubTask) {
-        updatedSubTask.setId(id); // ensure correct ID
+        updatedSubTask.setId(id);
         SubTask saved = subTaskService.updateSubTask(updatedSubTask);
         return ResponseEntity.ok(saved);
     }

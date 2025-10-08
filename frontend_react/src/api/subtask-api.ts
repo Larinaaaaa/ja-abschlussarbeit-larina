@@ -23,12 +23,12 @@ export async function createSubTask(subtask: SubTask): Promise<SubTask | null> {
         });
 
         if (!response.ok) {
-            throw new Error('Fehler beim Erstellen der Subtask');
+            throw new Error(`Server error: ${response.status}`);
         }
 
         return await response.json();
     } catch (e) {
-        console.error(e);
+        console.error("Fehler beim erstellen der Aufgabe: ", e);
         return null;
     }
 }

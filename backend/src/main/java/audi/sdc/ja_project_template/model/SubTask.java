@@ -12,7 +12,6 @@ public class SubTask{
     private Long id;
 
     private String name;
-    private String details;
     private boolean completed;
 
     @ManyToOne
@@ -20,10 +19,9 @@ public class SubTask{
     @JsonBackReference
     private Task task;
 
-    public SubTask(Long id, String name, String details, boolean completed) {
+    public SubTask(Long id, String name, boolean completed) {
         this.id = id;
         this.name = name;
-        this.details = details;
         this.completed = completed;
     }
 
@@ -45,14 +43,6 @@ public class SubTask{
         this.name = name;
     }
 
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
     public boolean isCompleted() {
         return completed;
     }
@@ -71,7 +61,7 @@ public class SubTask{
 
     @Override
     public String toString() {
-        return String.format("Subtask #%d: %s, Details: %s [completed: %s]", id, name, details, completed);
+        return String.format("Subtask #%d: %s, [completed: %s]", id, name, completed);
 
     }
 }

@@ -2,16 +2,19 @@ import { TextField, Text } from "@audi/audi-ui-react";
 import { useState } from "react";
 
 interface SubtaskInputProps {
-    onAdd: (name: string) => void;
+    taskId: number;
+    onCreateSubtask: (taskId: number, name: string) => void;
+    loading?: boolean;
+    error?: string | null;
 }
 
-const SubtaskInput: React.FC<SubtaskInputProps> = ({ onAdd }) => {
+const SubtaskInput: React.FC<SubtaskInputProps> = ({ taskId, onCreateSubtask, loading, error }) => {
     const [value, setValue] = useState("");
 
     const handleSubmit = () => {
         const name = value.trim();
-        if (!name) return;
-        onAdd(name);
+        if (!name || loading) return;
+        onCreateSubtask(taskId, name);
         setValue("");
     };
 
@@ -19,14 +22,16 @@ const SubtaskInput: React.FC<SubtaskInputProps> = ({ onAdd }) => {
         <div className="subtask-input-row">
             <TextField
                 hideLabelOptional
-                inputId="subtask-input"
+                inputId={`subtask-input-${taskId}`}
                 label="Unteraufgabe hinzufügen"
                 value={value}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
+                disabled={loading}
             />
-            <button className="subtask-add-button" onClick={handleSubmit}>
-                <Text id="button-text" variant="copy2">Bestätigen</Text>
+            <button className="subtask-add-button" onClick={handleSubmit} disabled={loading}>
+                <Text variant="copy2">{loading ? "Lädt..." : "Bestätigen"}</Text>
             </button>
+            {error && <Text variant="copy2">{error}</Text>}
         </div>
     );
 };

@@ -2,6 +2,7 @@ import './Overview.css'
 import { Task } from '../../../model/Task'
 import { Category } from '../../../model/Category'
 import TaskColumn from './TaskColumn'
+import {useSubTasks} from "../../../hooks/useSubtasks.ts";
 
 interface OverviewProps {
     tasks: Task[]
@@ -14,6 +15,8 @@ const categoryLabels: Record<Category, string> = {
 }
 
 const Overview: React.FC<OverviewProps> = ({ tasks }) => {
+    const { subTasksByTask, addSubTask, loading, error } = useSubTasks();
+
     const categorizedTasks = tasks.reduce<Record<Category, Task[]>>((acc, task) => {
         const cat = categoryLabels[task.category] ? task.category : Category.SONSTIGE
         acc[cat] = acc[cat] || []
@@ -28,10 +31,14 @@ const Overview: React.FC<OverviewProps> = ({ tasks }) => {
                     key={category}
                     title={categoryLabels[category]}
                     tasks={categorizedTasks[category]}
+                    subTasksByTask={subTasksByTask}
+                    handleCreateSubtask={addSubTask}
+                    loading={loading}
+                    error={error}
                 />
             ))}
         </div>
     )
 }
 
-export default Overview
+export default Overview;

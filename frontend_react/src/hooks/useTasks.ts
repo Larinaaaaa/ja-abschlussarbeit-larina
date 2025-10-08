@@ -10,11 +10,9 @@ export function useTasks() {
     useEffect(() => {
         async function fetchTasks() {
             try {
-                setLoading(true);
                 const data = await loadTasks();
                 setTasks(data);
             } catch (err) {
-                console.error("Fehler beim Laden der Tasks:", err);
                 setError((err as Error).message);
             } finally {
                 setLoading(false);
@@ -22,7 +20,8 @@ export function useTasks() {
         }
         fetchTasks();
     }, []);
-    return { tasks, loading, error, setTasks };
+
+    return { tasks, setTasks, loading, error };
 }
 
 /*async function addTask(task: Omit<Task, "id">) {
@@ -30,7 +29,7 @@ export function useTasks() {
         const newTask = await createTask(task);
         setTasks(prev => [...prev, newTask]);
     } catch (err) {
-        console.error("Fehler beim Hinzufügen der Task:", err);
+        console.error("Fehler beim Hinzufügen der Aufgabe:", err);
     }
 }
 */
