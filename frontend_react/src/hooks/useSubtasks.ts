@@ -1,9 +1,9 @@
-import { useState, useEffect } from "react";
-import { SubTask } from "../model/SubTask";
-import { createSubTask, loadSubTasks } from "../api/subtask-api";
+import {useState, useEffect} from "react";
+import {SubTask} from "../model/SubTask";
+import {createSubTask, loadSubTasks} from "../api/subtask-api";
 
 export interface SubTasksByTask {
-    [taskId: number]: SubTask[];
+    [task_id: number]: SubTask[];
 }
 
 export function useSubTasks() {
@@ -16,18 +16,24 @@ export function useSubTasks() {
             try {
                 setLoading(true);
                 const allSubTasks = await loadSubTasks();
+                const mappedSubTasks = allSubTasks.map(sub => ({
+                    ...sub,
+                    taskId: sub.task_id
+                }));
                 const grouped: SubTasksByTask = {};
-                allSubTasks.forEach(sub => {
+                mappedSubTasks.forEach(sub => {
                     if (!grouped[sub.taskId]) grouped[sub.taskId] = [];
                     grouped[sub.taskId].push(sub);
                 });
                 setSubTasksByTask(grouped);
+                console.log(await loadSubTasks());
             } catch (err) {
                 setError((err as Error).message);
             } finally {
                 setLoading(false);
             }
         }
+
         fetchSubTasks();
     }, []);
 
@@ -35,7 +41,7 @@ export function useSubTasks() {
         setLoading(true);
         setError(null);
         try {
-            const newSubTask: Omit<SubTask, "id"> = { taskId, name, completed: false };
+            const newSubTask = {task_id: taskId, name, completed: false};
             const result = await createSubTask(newSubTask);
             if (result) {
                 setSubTasksByTask(prev => ({
@@ -50,5 +56,5 @@ export function useSubTasks() {
         }
     };
 
-    return { subTasksByTask, addSubTask, loading, error };
+    return {subTasksByTask, addSubTask, loading, error};
 }

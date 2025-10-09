@@ -1,7 +1,8 @@
-import { Accordion, AccordionSection, Checkbox, Text } from "@audi/audi-ui-react";
-import { useState } from "react";
-import { Task } from "../../../model/Task";
-import { SubTask } from "../../../model/SubTask";
+import './Overview.css'
+import {Accordion, AccordionSection, Checkbox, Text} from "@audi/audi-ui-react";
+import {useState} from "react";
+import {Task} from "../../../model/Task";
+import {SubTask} from "../../../model/SubTask";
 import SubtaskList from "./SubtaskList";
 import SubtaskInput from "./SubtaskInput";
 
@@ -26,11 +27,11 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     const [inputVisibility, setInputVisibility] = useState<Record<number, boolean>>({});
 
     const toggleCompleted = (id: number) => {
-        setCompletedTasks(prev => ({ ...prev, [id]: !prev[id] }));
+        setCompletedTasks(prev => ({...prev, [id]: !prev[id]}));
     };
 
     const toggleInput = (taskId: number) => {
-        setInputVisibility(prev => ({ ...prev, [taskId]: !prev[taskId] }));
+        setInputVisibility(prev => ({...prev, [taskId]: !prev[taskId]}));
     };
 
     return (
@@ -61,15 +62,12 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                     >
                         <div className="accordion-content">
                             {/* Subtasks anzeigen */}
-                            <SubtaskList subtasks={subTasksByTask[task.id] || []} />
+                            <SubtaskList subtasks={subTasksByTask[task.id] || []}/>
 
                             <button
                                 className="round-plus-button"
                                 onClick={() => toggleInput(task.id)}
-                            >
-                                +
-                            </button>
-                            <SubtaskList subtasks={subTasksByTask[task.id] || []} />
+                            >+</button>
                             {inputVisibility[task.id] && (
                                 <SubtaskInput
                                     taskId={task.id}

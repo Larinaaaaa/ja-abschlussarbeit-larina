@@ -19,10 +19,11 @@ public class SubTask{
     @JsonBackReference
     private Task task;
 
-    public SubTask(Long id, String name, boolean completed) {
+    public SubTask(Long id, String name, boolean completed,  Task task) {
         this.id = id;
         this.name = name;
         this.completed = completed;
+        this.task = task;
     }
 
     public SubTask() {}

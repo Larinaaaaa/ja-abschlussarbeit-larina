@@ -1,3 +1,4 @@
+import './Overview.css'
 import { TextField, Text } from "@audi/audi-ui-react";
 import { useState } from "react";
 
@@ -23,14 +24,15 @@ const SubtaskInput: React.FC<SubtaskInputProps> = ({ taskId, onCreateSubtask, lo
             <TextField
                 hideLabelOptional
                 inputId={`subtask-input-${taskId}`}
-                label="Unteraufgabe hinzufügen"
+                label="Aufgabe Hinzufügen"
                 value={value}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => setValue(e.target.value)}
                 disabled={loading}
             />
             <button className="subtask-add-button" onClick={handleSubmit} disabled={loading}>
-                <Text variant="copy2">{loading ? "Lädt..." : "Bestätigen"}</Text>
-            </button>
+                <Text variant="copy2" className="button-text">
+                    {loading ? "Lädt..." : "Bestätigen"}
+                </Text>            </button>
             {error && <Text variant="copy2">{error}</Text>}
         </div>
     );

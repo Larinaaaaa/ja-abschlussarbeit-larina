@@ -4,6 +4,7 @@ export async function loadSubTasks(): Promise<SubTask[]> {
     const subTasks: SubTask[] = [];
     try {
         const response = await fetch('http://localhost:8080/api/subtasks');
+        console.log(response)
         return await response.json();
 
     } catch (e) {
@@ -12,7 +13,11 @@ export async function loadSubTasks(): Promise<SubTask[]> {
     }
 }
 
-export async function createSubTask(subtask: SubTask): Promise<SubTask | null> {
+export async function createSubTask(subtask: {
+    task_id: number;
+    name: string;
+    completed: boolean
+}): Promise<SubTask | null> {
     try {
         const response = await fetch('http://localhost:8080/api/subtasks', {
             method: 'POST',

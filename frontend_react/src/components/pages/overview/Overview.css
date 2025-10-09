@@ -96,11 +96,11 @@ html, body, #root {
 
 .subtask-add-button {
     margin-top: 17px;
-    background-color: black;
+    background-color: #000000;
     padding-top: 5px;
     padding-bottom: 5px;
 }
 
-#button-text {
+.subtask-add-button .button-text {
     color: white;
 }

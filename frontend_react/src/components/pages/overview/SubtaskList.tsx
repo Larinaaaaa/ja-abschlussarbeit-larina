@@ -1,3 +1,4 @@
+import './Overview.css'
 import { Checkbox, Text } from "@audi/audi-ui-react";
 import { SubTask } from "../../../model/SubTask";
 
@@ -10,10 +11,10 @@ const SubtaskList: React.FC<SubtaskListProps> = ({ subtasks }) => {
 
     return (
         <div className="subtasks">
-            {subtasks.map((sub) => (
-                <div key={sub.id} className="subtask-item">
-                    <Checkbox inputId={`subtask-${sub.id}`} checked={sub.completed} />
-                    <Text variant="copy1">{sub.name}</Text>
+            {subtasks.map((subtask) => (
+                <div key={subtask.id} className="subtask-item">
+                    <Checkbox inputId={`subtask-${subtask.id}`} checked={subtask.completed} />
+                    <Text variant="copy1">{subtask.name}</Text>
                 </div>
             ))}
         </div>
