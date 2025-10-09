@@ -1,6 +1,8 @@
 package audi.sdc.ja_project_template.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 @Entity
@@ -19,14 +21,14 @@ public class SubTask{
     @JsonBackReference
     private Task task;
 
+    public SubTask(){}
+
     public SubTask(Long id, String name, boolean completed,  Task task) {
         this.id = id;
         this.name = name;
         this.completed = completed;
         this.task = task;
     }
-
-    public SubTask() {}
 
     public Long getId() {
         return id;
@@ -58,6 +60,11 @@ public class SubTask{
 
     public void setTask(Task task) {
         this.task = task;
+    }
+
+    @Transient
+    public Long getTaskId() {
+        return task != null ? task.getId() : null;
     }
 
     @Override

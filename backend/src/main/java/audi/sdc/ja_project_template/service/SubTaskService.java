@@ -36,9 +36,7 @@ public class SubTaskService {
     }
 
     public List<SubTask> findSubTasksByTaskId(Long taskId) {
-        return taskRepository.findById(taskId)
-                .map(Task::getSubtasks)
-                .orElse(Collections.emptyList());
+        return subTaskRepository.findByTask_Id(taskId);
     }
 
     public List<SubTask> findByCompleted(boolean completed) {

@@ -1,5 +1,6 @@
 package audi.sdc.ja_project_template.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
@@ -34,7 +35,8 @@ public class Task {
     @JsonManagedReference
     private List<SubTask> subtasks = new ArrayList<>();
 
-    public Task() {}
+    public Task() {
+    }
 
     public Task(Long id, String name, String details) {
         this.id = id;
@@ -48,7 +50,8 @@ public class Task {
         this.status = Status.OPEN;
     }
 
-    public Task(String name, LocalDate dueDate, String details, Category category, String priority, String complexity) {}
+    public Task(String name, LocalDate dueDate, String details, Category category, String priority, String complexity) {
+    }
 
     public Long getId() {
         return id;
