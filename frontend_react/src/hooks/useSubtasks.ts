@@ -45,7 +45,7 @@ export function useSubTasks() {
         setLoading(true);
         setError(null);
         try {
-            const newSubTask = {task_id: taskId, name, completed: false};
+            const newSubTask = { taskId, name, completed: false };
             const result = await createSubTask(newSubTask);
             if (result) {
                 setSubTasksByTask(prev => ({
@@ -59,6 +59,7 @@ export function useSubTasks() {
             setLoading(false);
         }
     };
+
 
     return {subTasksByTask, addSubTask, loading, error};
 }

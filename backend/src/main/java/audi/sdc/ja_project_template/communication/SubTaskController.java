@@ -1,22 +1,27 @@
 package audi.sdc.ja_project_template.communication;
 
 import audi.sdc.ja_project_template.model.SubTask;
+import audi.sdc.ja_project_template.model.Task;
 import audi.sdc.ja_project_template.service.SubTaskService;
+import audi.sdc.ja_project_template.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/subtasks")
 public class SubTaskController {
 
     private final SubTaskService subTaskService;
+    private final TaskService taskService;
 
     @Autowired
-    public SubTaskController(SubTaskService subTaskService) {
+    public SubTaskController(SubTaskService subTaskService, TaskService taskService) {
         this.subTaskService = subTaskService;
+        this.taskService = taskService;
     }
 
     @GetMapping
@@ -47,10 +52,21 @@ public class SubTaskController {
     }
 
     @PostMapping
-    public ResponseEntity<SubTask> createSubTask(@RequestBody SubTask subTask) {
-        SubTask created = subTaskService.createSubTask(subTask);
-        return ResponseEntity.ok(created);
+    public SubTask createSubTask(@RequestBody Map<String, Object> payload) {
+        Long taskId = Long.valueOf(payload.get("taskId").toString());
+        String name = payload.get("name").toString();
+
+        Task task = taskService.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task nicht gefunden"));
+
+        SubTask subTask = new SubTask();
+        subTask.setName(name);
+        subTask.setCompleted(false);
+        subTask.setTask(task);
+
+        return subTaskService.createSubTask(subTask);
     }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<SubTask> updateSubTask(@PathVariable Long id, @RequestBody SubTask updatedSubTask) {

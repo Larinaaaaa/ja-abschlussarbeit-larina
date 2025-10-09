@@ -14,7 +14,7 @@ export async function loadSubTasks(): Promise<SubTask[]> {
 }
 
 export async function createSubTask(subtask: {
-    task_id: number;
+    taskId: number;
     name: string;
     completed: boolean
 }): Promise<SubTask | null> {
