@@ -1,6 +1,8 @@
 import {useEffect, useState} from "react";
 import {Task} from "../model/Task.ts";
-import {loadTasks} from "../api/task-api.ts";
+import {createTask, loadTasks} from "../api/task-api.ts";
+import {Category} from "../model/Category.ts";
+import {Status} from "../model/Status.ts";
 
 export function useTasks() {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -21,15 +23,29 @@ export function useTasks() {
         fetchTasks();
     }, []);
 
-    return { tasks, setTasks, loading, error };
-}
+    const addTask = async (task: {
+        name: string;
+        details: string;
+        dueDate: string;
+        category: Category;
+        status: Status;
+        priority: string;
+        complexity: string;
+    }) => {
+        setLoading(true);
+        try {
+            const created = await createTask({
+                ...task,
+                created: new Date().toISOString(),
+                subtasks: [],
+            });
+            setTasks(prev => [...prev, created]);
+        } catch (err) {
+            setError((err as Error).message);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-/*async function addTask(task: Omit<Task, "id">) {
-    try {
-        const newTask = await createTask(task);
-        setTasks(prev => [...prev, newTask]);
-    } catch (err) {
-        console.error("Fehler beim Hinzufügen der Aufgabe:", err);
-    }
+    return { tasks, addTask, loading, error };
 }
-*/

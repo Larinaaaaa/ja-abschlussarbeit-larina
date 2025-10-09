@@ -9,11 +9,6 @@
     flex-direction: column;
     gap: 12px;
     padding: 8px 0;
-}
-
-.accordion-content {
-    display: flex;
-    flex-direction: column;
     align-items: flex-start;
 }
 
@@ -90,7 +85,7 @@ html, body, #root {
 
 .subtask-input-row{
     display: flex;
-    align-items: center; /* sorgt dafür, dass sie vertikal zentriert sind */
+    align-items: center;
     gap: 20px;
 }
 
@@ -104,3 +99,14 @@ html, body, #root {
 .subtask-add-button .button-text {
     color: white;
 }
+
+.category-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    padding: 10px 16px;
+    color: white;
+}
+

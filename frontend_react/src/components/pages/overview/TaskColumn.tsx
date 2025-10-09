@@ -5,6 +5,9 @@ import {Task} from "../../../model/Task";
 import {SubTask} from "../../../model/SubTask";
 import SubtaskList from "./SubtaskList";
 import SubtaskInput from "./SubtaskInput";
+import {useTasks} from "../../../hooks/useTasks.ts";
+import TaskInput from "./TaskInput.tsx";
+import {Category} from "../../../model/Category.ts";
 
 interface TaskColumnProps {
     title: string;
@@ -25,6 +28,13 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                                }) => {
     const [completedTasks, setCompletedTasks] = useState<Record<number, boolean>>({});
     const [inputVisibility, setInputVisibility] = useState<Record<number, boolean>>({});
+    const [showTaskInput, setShowTaskInput] = useState(false);
+    const { addTask } = useTasks();
+
+    const handleCreateTask = async (taskData: any) => {
+        await addTask(taskData);
+        setShowTaskInput(false);
+    };
 
     const toggleCompleted = (id: number) => {
         setCompletedTasks(prev => ({...prev, [id]: !prev[id]}));
@@ -38,7 +48,20 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
         <div className="overview-column">
             <div className="category-header">
                 <Text as="h1" weight="bold" variant="order4">{title}</Text>
+                <button
+                    className="round-plus-button"
+                    onClick={() => setShowTaskInput(!showTaskInput)}
+                >  +</button>
             </div>
+
+            {showTaskInput && (
+                <TaskInput
+                    defaultCategory={title as unknown as Category}
+                    onCreateTask={handleCreateTask}
+                    loading={loading}
+                    error={error}
+                />
+            )}
 
             <Accordion>
                 {tasks.map(task => (
