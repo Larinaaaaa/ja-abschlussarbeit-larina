@@ -3,7 +3,7 @@ import {SubTask} from "../model/SubTask";
 import {createSubTask, loadSubTasks} from "../api/subtask-api";
 
 export interface SubTasksByTask {
-    [task_id: number]: SubTask[];
+    [taskId: number]: SubTask[];
 }
 
 export function useSubTasks() {
@@ -15,24 +15,28 @@ export function useSubTasks() {
         async function fetchSubTasks() {
             try {
                 setLoading(true);
+                setError(null);
+
                 const allSubTasks = await loadSubTasks();
-                const mappedSubTasks = allSubTasks.map(sub => ({
-                    ...sub,
-                    taskId: sub.task_id
-                }));
-                const grouped: SubTasksByTask = {};
-                mappedSubTasks.forEach(sub => {
-                    if (!grouped[sub.taskId]) grouped[sub.taskId] = [];
-                    grouped[sub.taskId].push(sub);
-                });
+                const grouped = allSubTasks.reduce<SubTasksByTask>((subTasksByTask, subTask) => {
+                    const { taskId } = subTask;
+                    if (!taskId) return subTasksByTask;
+                    if (!subTasksByTask[taskId]) subTasksByTask[taskId] = [];
+                    subTasksByTask[taskId].push(subTask);
+                    return subTasksByTask;
+                }, {});
+
                 setSubTasksByTask(grouped);
-                console.log(await loadSubTasks());
-            } catch (err) {
-                setError((err as Error).message);
+
+                console.log("Fetched Subtasks:", allSubTasks);
+            } catch (e) {
+                console.error(e);
+                setError((e as Error).message);
             } finally {
                 setLoading(false);
             }
         }
+
 
         fetchSubTasks();
     }, []);
