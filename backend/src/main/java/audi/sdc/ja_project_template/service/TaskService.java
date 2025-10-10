@@ -1,8 +1,6 @@
 package audi.sdc.ja_project_template.service;
 
-import audi.sdc.ja_project_template.model.Category;
-import audi.sdc.ja_project_template.model.Status;
-import audi.sdc.ja_project_template.model.Task;
+import audi.sdc.ja_project_template.model.*;
 import audi.sdc.ja_project_template.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
@@ -34,11 +32,11 @@ public class TaskService {
         return taskRepository.findByCategory(category);
     }
 
-    public List<Task> findByPriority(String priority) {
+    public List<Task> findByPriority(Priority priority) {
         return taskRepository.findByPriority(priority);
     }
 
-    public List<Task> findByComplexity(String complexity) {
+    public List<Task> findByComplexity(Complexity complexity) {
         return taskRepository.findByComplexity(complexity);
     }
 

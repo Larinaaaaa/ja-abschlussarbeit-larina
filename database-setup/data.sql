@@ -3,9 +3,6 @@ CREATE DATABASE IF NOT EXISTS tracker_db;
 
 USE tracker_db;
 
-# GRANT ALL PRIVILEGES ON tracker_db.* TO 'accessUser'@'%' IDENTIFIED BY 'accessPassword';
-# FLUSH PRIVILEGES;
-
 -- Alte Tabellen entfernen
 DROP TABLE IF EXISTS subtask;
 DROP TABLE IF EXISTS task;
@@ -36,17 +33,17 @@ CREATE TABLE subtask
 -- Beispieldaten einfügen
 INSERT INTO task (name, created, due_date, details, category, priority, complexity, status)
 VALUES ('Projekt vorbereiten', '2025-09-03', '2025-09-15',
-        'Projektplan erstellen und Ressourcen klären', 'VS', 'High', 'Medium', 'OPEN'),
+        'Projektplan erstellen und Ressourcen klären', 'VS', 'HIGH', 'HIGH', 'OPEN'),
 
        ('Dokumentation schreiben', '2025-09-04', '2025-09-20',
-        'Technische Dokumentation erstellen', 'VS', 'Medium', 'Low', 'OPEN'),
+        'Technische Dokumentation erstellen', 'VS', 'MEDIUM', 'MEDIUM', 'OPEN'),
 
        ('Hybridkurs Aufgaben', '2025-09-04', '2025-09-20',
-        'Aufgaben zu Algorithmen erledigen', 'BIZ', 'High', 'Low', 'OPEN'),
+        'Aufgaben zu Algorithmen erledigen', 'BIZ', 'LOW', 'MEDIUM', 'OPEN'),
 
 
        ('TNO schreiben', '2025-09-18', '2025-09-20',
-        'Berufsschule nachtragen', 'SONSTIGE', 'Low', 'Low', 'OPEN');
+        'Berufsschule nachtragen', 'SONSTIGE', 'LOW', 'LOW', 'OPEN');
 
 INSERT INTO subtask (name, completed, task_id)
 VALUES ('Projektplan schreiben', FALSE, 1),

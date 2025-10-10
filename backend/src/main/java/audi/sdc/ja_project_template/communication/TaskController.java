@@ -1,8 +1,6 @@
 package audi.sdc.ja_project_template.communication;
 
-import audi.sdc.ja_project_template.model.Category;
-import audi.sdc.ja_project_template.model.Status;
-import audi.sdc.ja_project_template.model.Task;
+import audi.sdc.ja_project_template.model.*;
 import audi.sdc.ja_project_template.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -47,12 +45,12 @@ public class TaskController {
     }
 
     @GetMapping("/priority")
-    public List<Task> getTasksByPriority(@RequestParam String priority) {
+    public List<Task> getTasksByPriority(@RequestParam Priority priority) {
         return taskService.findByPriority(priority);
     }
 
     @GetMapping("/complexity")
-    public List<Task> getTasksByComplexity(@RequestParam String complexity) {
+    public List<Task> getTasksByComplexity(@RequestParam Complexity complexity) {
         return taskService.findByComplexity(complexity);
     }
 

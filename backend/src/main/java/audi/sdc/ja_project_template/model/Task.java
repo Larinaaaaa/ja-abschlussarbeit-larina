@@ -27,8 +27,12 @@ public class Task {
 
     @Enumerated(EnumType.STRING)
     private Category category;
-    private String priority;
-    private String complexity;
+    @Enumerated(EnumType.STRING)
+
+    private Priority priority;
+
+    @Enumerated(EnumType.STRING)
+    private Complexity complexity;
 
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -52,7 +56,7 @@ public class Task {
         this.status = Status.OPEN;
     }
 
-    public Task(String name, LocalDate dueDate, String details, Category category, String priority, String complexity) {
+    public Task(String name, LocalDate dueDate, String details, Category category, Priority priority, Complexity complexity) {
     }
 
     public Long getId() {
@@ -103,19 +107,19 @@ public class Task {
         this.category = category;
     }
 
-    public String getPriority() {
+    public Priority getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(Priority priority) {
         this.priority = priority;
     }
 
-    public String getComplexity() {
+    public Complexity getComplexity() {
         return complexity;
     }
 
-    public void setComplexity(String complexity) {
+    public void setComplexity(Complexity complexity) {
         this.complexity = complexity;
     }
 
