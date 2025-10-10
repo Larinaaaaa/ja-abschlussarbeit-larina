@@ -34,8 +34,8 @@ Content-Type: application/json
   "dueDate": "2025-09-30",
   "details": "Abschlussbericht schreiben und finalisieren",
   "category": "VS",
-  "priority": "High",
-  "complexity": "Medium",
+  "priority": "HIGH",
+  "complexity": "MEDIUM",
   "status": "OPEN"
 }
 
@@ -51,7 +51,7 @@ Content-Type: application/json
   "dueDate": "2025-09-18",
   "details": "Projektplan überarbeiten",
   "category": "VS",
-  "priority": "High",
-  "complexity": "Medium",
+  "priority": "HIGH",
+  "complexity": "MEDIUM",
   "status": "OPEN"
 }
