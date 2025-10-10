@@ -26,7 +26,7 @@ export function useTasks() {
     const addTask = async (task: {
         name: string;
         details: string;
-        dueDate: string;
+        dueDate: Date | null;
         category: Category;
         status: Status;
         priority: string;
@@ -36,7 +36,8 @@ export function useTasks() {
         try {
             const created = await createTask({
                 ...task,
-                created: new Date().toISOString(),
+                created: new Date().toISOString().split("T")[0],
+                dueDate: task.dueDate ? task.dueDate.toISOString().split("T")[0] : null,
                 subtasks: [],
             });
             setTasks(prev => [...prev, created]);

@@ -1,5 +1,6 @@
 package audi.sdc.ja_project_template.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -20,6 +21,7 @@ public class Task {
     private LocalDate created;
 
     @Column(name = "due_date")
+    @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
     private String details;
 

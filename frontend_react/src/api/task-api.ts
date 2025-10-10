@@ -1,4 +1,4 @@
-import {Task} from "../model/Task.ts";
+import {Task, CreateTaskRequest} from "../model/Task.ts";
 
 export async function loadTasks(): Promise<Task[]> {
     try {
@@ -16,7 +16,7 @@ export async function loadTasks(): Promise<Task[]> {
     }
 }
 
-export async function createTask(task: Omit<Task, "id">): Promise<Task> {
+export async function createTask(task: CreateTaskRequest): Promise<Task> {
     try {
         const response = await fetch('http://localhost:8080/api/tasks', {
             method: "POST",

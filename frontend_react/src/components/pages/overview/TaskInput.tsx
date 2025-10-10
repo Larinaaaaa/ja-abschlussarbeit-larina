@@ -8,7 +8,7 @@ interface TaskInputProps {
     onCreateTask: (task: {
         name: string;
         details: string;
-        dueDate: string;
+        dueDate: Date | null;
         category: Category;
         status: Status;
         priority: string;
@@ -40,8 +40,8 @@ const TaskInput: React.FC<TaskInputProps> = ({
         setDetails("");
         setDueDate(null);
         setStatus(Status.TODO);
-        setPriority("Mittel");
-        setComplexity("Normal");
+        setPriority("");
+        setComplexity("");
     };
 
     return (

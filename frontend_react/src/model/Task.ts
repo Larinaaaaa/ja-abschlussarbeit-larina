@@ -6,7 +6,7 @@ export interface Task {
     id: number
     name: string
     created: string
-    dueDate: string
+    dueDate: string | null;
     details: string
     category: Category
     priority: string
@@ -14,3 +14,5 @@ export interface Task {
     status: Status
     subtasks: SubTask[]
 }
+
+export type CreateTaskRequest = Omit<Task, "id">;
