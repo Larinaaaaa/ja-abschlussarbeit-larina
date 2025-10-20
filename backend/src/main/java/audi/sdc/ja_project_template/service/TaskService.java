@@ -1,6 +1,10 @@
 package audi.sdc.ja_project_template.service;
 
 import audi.sdc.ja_project_template.model.*;
+import audi.sdc.ja_project_template.model.enums.Category;
+import audi.sdc.ja_project_template.model.enums.Complexity;
+import audi.sdc.ja_project_template.model.enums.Priority;
+import audi.sdc.ja_project_template.model.enums.Status;
 import audi.sdc.ja_project_template.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 

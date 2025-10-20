@@ -1,7 +1,10 @@
 package audi.sdc.ja_project_template.model;
 
+import audi.sdc.ja_project_template.model.enums.Category;
+import audi.sdc.ja_project_template.model.enums.Complexity;
+import audi.sdc.ja_project_template.model.enums.Priority;
+import audi.sdc.ja_project_template.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 

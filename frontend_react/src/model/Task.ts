@@ -1,6 +1,6 @@
 import { SubTask } from './SubTask.ts'
-import {Status} from "./Status.ts";
-import {Category} from "./Category.ts";
+import {Status} from "./enums/Status.ts";
+import {Category} from "./enums/Category.ts";
 
 export interface Task {
     id: number

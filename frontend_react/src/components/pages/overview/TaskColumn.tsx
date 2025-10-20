@@ -7,7 +7,7 @@ import SubtaskList from "./SubtaskList";
 import SubtaskInput from "./SubtaskInput";
 import {useTasks} from "../../../hooks/useTasks.ts";
 import TaskInput from "./TaskInput.tsx";
-import {Category} from "../../../model/Category.ts";
+import {Category} from "../../../model/enums/Category.ts";
 
 interface TaskColumnProps {
     title: string;

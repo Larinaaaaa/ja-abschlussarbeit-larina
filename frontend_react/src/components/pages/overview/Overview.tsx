@@ -1,6 +1,6 @@
 import './Overview.css'
 import { Task } from '../../../model/Task'
-import { Category } from '../../../model/Category'
+import { Category } from '../../../model/enums/Category.ts'
 import TaskColumn from './TaskColumn'
 import {useSubTasks} from "../../../hooks/useSubtasks.ts";
 

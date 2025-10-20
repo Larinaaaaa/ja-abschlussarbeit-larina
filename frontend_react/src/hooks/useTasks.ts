@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import {Task} from "../model/Task.ts";
 import {createTask, loadTasks} from "../api/task-api.ts";
-import {Category} from "../model/Category.ts";
-import {Status} from "../model/Status.ts";
+import {Category} from "../model/enums/Category.ts";
+import {Status} from "../model/enums/Status.ts";
 
 export function useTasks() {
     const [tasks, setTasks] = useState<Task[]>([]);
