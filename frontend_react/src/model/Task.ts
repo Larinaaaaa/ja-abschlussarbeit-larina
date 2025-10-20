@@ -6,7 +6,7 @@ export interface Task {
     id: number
     name: string
     created: string
-    dueDate: string | null;
+    dueDate: Date;
     details: string
     category: Category
     priority: string

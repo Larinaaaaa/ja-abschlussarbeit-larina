@@ -23,7 +23,7 @@ public class Task {
     private String name;
     private LocalDate created;
 
-    @Column(name = "due_date")
+    @Column(name = "dueDate")
     @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
     private String details;

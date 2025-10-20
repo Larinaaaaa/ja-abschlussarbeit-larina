@@ -13,7 +13,7 @@ CREATE TABLE task
     id         BIGINT PRIMARY KEY AUTO_INCREMENT,
     name       VARCHAR(255) NOT NULL,
     created    DATE,
-    due_date   DATE,
+    dueDate    DATE,
     details    TEXT,
     category   VARCHAR(100),
     priority   VARCHAR(100),
@@ -25,13 +25,13 @@ CREATE TABLE subtask
 (
     id        BIGINT PRIMARY KEY AUTO_INCREMENT,
     name      VARCHAR(255) NOT NULL,
-    completed BOOLEAN NOT NULL DEFAULT FALSE,
+    completed BOOLEAN      NOT NULL DEFAULT FALSE,
     task_id   BIGINT,
     FOREIGN KEY (task_id) REFERENCES task (id) ON DELETE CASCADE
 );
 
 -- Beispieldaten einfügen
-INSERT INTO task (name, created, due_date, details, category, priority, complexity, status)
+INSERT INTO task (name, created, dueDate, details, category, priority, complexity, status)
 VALUES ('Projekt vorbereiten', '2025-09-03', '2025-09-15',
         'Projektplan erstellen und Ressourcen klären', 'VS', 'HIGH', 'HIGH', 'OPEN'),
 
