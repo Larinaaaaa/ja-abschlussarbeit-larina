@@ -47,11 +47,11 @@ const TaskInput: React.FC<TaskInputProps> = ({
         onCreateTask({name, details, dueDate, category, status, priority, complexity});
         setName("");
         setDetails("");
-        setDueDate(dueDate);
-        setCategory(category)
-        setStatus(status);
-        setPriority(priority);
-        setComplexity(complexity);
+        setDueDate('2022-01-01');
+        setCategory(Category.SONSTIGE)
+        setStatus(Status.TODO);
+        setPriority(Priority.MEDIUM);
+        setComplexity(Complexity.MEDIUM);
     };
 
     return (
@@ -78,7 +78,7 @@ const TaskInput: React.FC<TaskInputProps> = ({
                 hideLabelOptional
                 label="Fälligkeitsdatum"
                 value={dueDate}
-                onChange={(nextValue: Date | null) => setDueDate(nextValue)}
+                onChange={(nextValue: Date) => setDueDate(nextValue)}
                 disabled={loading}
             />
 
@@ -124,10 +124,11 @@ const TaskInput: React.FC<TaskInputProps> = ({
 
             <Select
                 inputId={`task-priority-${category}`}
-                hideLabelOptional
+                required
                 label="Priorität"
                 value={priority}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setPriority(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                    setPriority(e.target.value as Priority)}
             >
                 <React.Fragment key=".0">
                     <optgroup label="Optionen:">
@@ -142,10 +143,10 @@ const TaskInput: React.FC<TaskInputProps> = ({
 
             <Select
                 inputId={`task-complexity-${category}`}
-                hideLabelOptional
+                required
                 label="Komplexität"
                 value={complexity}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setComplexity(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setComplexity(e.target.value as Complexity)}
             >
                 <React.Fragment key=".0">
                     <optgroup label="Optionen:">
