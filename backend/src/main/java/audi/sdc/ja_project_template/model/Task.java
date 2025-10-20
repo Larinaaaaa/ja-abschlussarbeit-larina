@@ -6,6 +6,7 @@ import audi.sdc.ja_project_template.model.enums.Priority;
 import audi.sdc.ja_project_template.model.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -23,9 +24,10 @@ public class Task {
     private String name;
     private LocalDate created;
 
-    @Column(name = "dueDate")
+    @Column(name = "due_date")
     @JsonFormat(shape =  JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDate dueDate;
+
     private String details;
 
     @Enumerated(EnumType.STRING)
@@ -47,8 +49,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(Long id, String name, String details) {
-        this.id = id;
+    public Task(String name, LocalDate dueDate, String details, Category category, Priority priority, Complexity complexity) {
         this.name = name;
         this.created = LocalDate.now();
         this.dueDate = dueDate;
@@ -57,9 +58,6 @@ public class Task {
         this.priority = priority;
         this.complexity = complexity;
         this.status = Status.OPEN;
-    }
-
-    public Task(String name, LocalDate dueDate, String details, Category category, Priority priority, Complexity complexity) {
     }
 
     public Long getId() {
