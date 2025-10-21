@@ -35,15 +35,23 @@ export function useTasks() {
         complexity: Complexity;
     }) => {
         setLoading(true);
+        setError(null);
+        setMessage(null);
+
         try {
-            const created = await createTask({
+            const { task: created, status } = await createTask({
                 ...task,
                 created: new Date().toISOString().split("T")[0],
                 subtasks: [],
             });
-            setTasks(prev => [...prev, created]);
+            if (created) {
+                setTasks(prev => [...prev, created]);
+                setMessage(`Aufgabe erfolgreich erstellt (Status ${status})`);
+            } else {
+                setError(`Fehler beim Erstellen der Aufgabe (Status ${status})`);
+            }
         } catch (err) {
-            setError((err as Error).message);
+            setError("Serverfehler (Status unbekannt)");
         } finally {
             setLoading(false);
         }

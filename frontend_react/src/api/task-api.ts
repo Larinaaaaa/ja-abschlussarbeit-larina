@@ -24,12 +24,16 @@ export async function createTask(task: CreateTaskRequest): Promise<Task> {
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(task),
         });
+        const status = response.status;
+
         if (!response.ok) {
-            throw new Error(`Server error: ${response.status}`);
+            const errorText = await response.text();
+            console.error(`Server error ${status}:`, errorText);
+            return { task: null, status };
         }
 
         const createdTask: Task = await response.json();
-        return createdTask;
+        return { task: createdTask, status };
     } catch (e) {
         console.error("Fehler beim erstellen der Aufgabe: ", e);
         throw e

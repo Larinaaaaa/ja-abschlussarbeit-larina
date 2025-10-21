@@ -138,3 +138,9 @@ html, body, #root {
     display: flex;
     align-items: flex-start;
 }
+
+#edit-button {
+    margin-left: 5px;
+    background-color: #ffffff;
+    color: #ffffff;
+}

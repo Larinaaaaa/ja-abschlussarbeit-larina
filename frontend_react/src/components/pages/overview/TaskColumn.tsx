@@ -95,8 +95,10 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                     onChange={() => toggleCompleted(task.id)}
                                 />
                                 <div className="task-subline">
-                                    <Text variant="order4" weight="bold">{task.name}</Text>
-                                    <Text variant="copy1" weight="normal">{task.details}</Text>
+                                    <Text variant="order4" weight="bold">{task.name}
+                                        <button id="edit-button"><Text variant="copy3" weight="bold">Bearbeiten</Text></button>
+                                    </Text>
+                                <Text variant="copy1" weight="normal">{task.details}</Text>
                                     <Text variant="copy3"
                                           weight="normal">Komplexität: {complexityLabels[task.complexity]} & Priorität: {priorityLabels[task.priority]}</Text>
                                     <Text variant="copy2"
