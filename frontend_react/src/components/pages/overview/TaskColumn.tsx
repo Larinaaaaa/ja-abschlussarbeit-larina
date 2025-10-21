@@ -21,6 +21,18 @@ interface TaskColumnProps {
     error?: string | null;
 }
 
+const complexityLabels: Record<Complexity, string> = {
+    [Complexity.LOW]: "Niedrig",
+    [Complexity.MEDIUM]: "Mittel",
+    [Complexity.HIGH]: "Hoch",
+}
+
+const priorityLabels: Record<Priority, string> = {
+    [Priority.LOW]: "Niedrig",
+    [Priority.MEDIUM]: "Mittel",
+    [Priority.HIGH]: "Hoch",
+}
+
 const TaskColumn: React.FC<TaskColumnProps> = ({
                                                    title,
                                                    tasks,
@@ -32,7 +44,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     const [completedTasks, setCompletedTasks] = useState<Record<number, boolean>>({});
     const [inputVisibility, setInputVisibility] = useState<Record<number, boolean>>({});
     const [showTaskInput, setShowTaskInput] = useState(false);
-    const { addTask } = useTasks();
+    const {addTask} = useTasks();
 
     const handleCreateTask = async (taskData: any) => {
         await addTask(taskData);
@@ -54,7 +66,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                 <button
                     className="round-plus-button"
                     onClick={() => setShowTaskInput(!showTaskInput)}
-                >  +</button>
+                >+</button>
             </div>
 
             {showTaskInput && (
@@ -87,10 +99,17 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                         }
                         hint={`Fällig am ${task.dueDate ? new Date(task.dueDate).toLocaleDateString("de-DE") : "-"}`}
                         hintSeverity="informative"
-                        subline={task.details}
+                        subline={
+                            <div className="task-subline">
+                                <Text variant="copy1" weight="normal">{task.details}</Text>
+                                <Text variant="copy3" weight="normal">Komplexität: {complexityLabels[task.complexity]}</Text>
+                                <Text variant="copy3" weight="normal">Priorität: {priorityLabels[task.priority]}</Text>
+                                <Text variant="copy2"
+                                      weight="bold">{`Vom: ${task.created ? new Date(task.created).toLocaleDateString("de-DE") : "-"}`}</Text>
+                            </div>
+                        }
                     >
                         <div className="accordion-content">
-                            {/* Subtasks anzeigen */}
                             <SubtaskList subtasks={subTasksByTask[task.id] || []}/>
 
                             <button
