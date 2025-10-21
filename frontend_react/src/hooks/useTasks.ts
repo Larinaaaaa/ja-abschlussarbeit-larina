@@ -3,6 +3,8 @@ import {Task} from "../model/Task.ts";
 import {createTask, loadTasks} from "../api/task-api.ts";
 import {Category} from "../model/enums/Category.ts";
 import {Status} from "../model/enums/Status.ts";
+import {Priority} from "../model/enums/Priority.ts";
+import {Complexity} from "../model/enums/Complexity.ts";
 
 export function useTasks() {
     const [tasks, setTasks] = useState<Task[]>([]);
@@ -26,18 +28,17 @@ export function useTasks() {
     const addTask = async (task: {
         name: string;
         details: string;
-        dueDate: Date;
+        dueDate: string;
         category: Category;
         status: Status;
-        priority: string;
-        complexity: string;
+        priority: Priority;
+        complexity: Complexity;
     }) => {
         setLoading(true);
         try {
             const created = await createTask({
                 ...task,
                 created: new Date().toISOString().split("T")[0],
-                dueDate: task.dueDate,
                 subtasks: [],
             });
             setTasks(prev => [...prev, created]);

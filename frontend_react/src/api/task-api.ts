@@ -18,6 +18,7 @@ export async function loadTasks(): Promise<Task[]> {
 
 export async function createTask(task: CreateTaskRequest): Promise<Task> {
     try {
+        console.log("Aufgabe:", JSON.stringify(task, null, 2));
         const response = await fetch('http://localhost:8080/api/tasks', {
             method: "POST",
             headers: {"Content-Type": "application/json"},

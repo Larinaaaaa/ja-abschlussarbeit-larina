@@ -8,6 +8,9 @@ import SubtaskInput from "./SubtaskInput";
 import {useTasks} from "../../../hooks/useTasks.ts";
 import TaskInput from "./TaskInput.tsx";
 import {Category} from "../../../model/enums/Category.ts";
+import {Status} from "../../../model/enums/Status.ts";
+import {Complexity} from "../../../model/enums/Complexity.ts";
+import {Priority} from "../../../model/enums/Priority.ts";
 
 interface TaskColumnProps {
     title: string;
@@ -57,6 +60,9 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
             {showTaskInput && (
                 <TaskInput
                     defaultCategory={title as unknown as Category}
+                    defaultStatus={title as unknown as Status}
+                    defaultComplexity={title as unknown as Complexity}
+                    defaultPriority={title as unknown as Priority}
                     onCreateTask={handleCreateTask}
                     loading={loading}
                     error={error}
@@ -73,13 +79,13 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                             <div className="task-label">
                                 <Checkbox
                                     inputId={`checkbox-${task.id}`}
-                                    checked={!!completedTasks[task.id]}
+                                    checked={completedTasks[task.id]}
                                     onChange={() => toggleCompleted(task.id)}
                                 />
                                 <Text variant="order4" weight="bold">{task.name}</Text>
                             </div>
                         }
-                        hint={`Fällig am ${new Date(task.dueDate).toLocaleDateString("de-DE")}`}
+                        hint={`Fällig am ${task.dueDate ? new Date(task.dueDate).toLocaleDateString("de-DE") : "-"}`}
                         hintSeverity="informative"
                         subline={task.details}
                     >

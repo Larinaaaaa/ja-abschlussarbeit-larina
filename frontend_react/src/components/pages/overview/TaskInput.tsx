@@ -14,7 +14,7 @@ interface TaskInputProps {
     onCreateTask: (task: {
         name: string;
         details: string;
-        dueDate: Date | undefined;
+        dueDate: string | undefined;
         category: Category;
         status: Status;
         priority: Priority;
@@ -35,7 +35,7 @@ const TaskInput: React.FC<TaskInputProps> = ({
                                              }) => {
     const [name, setName] = useState("");
     const [details, setDetails] = useState("");
-    const [dueDate, setDueDate] = useState<Date>();
+    const [dueDate, setDueDate] = useState<string>();
     const [category, setCategory] = useState<Category>(defaultCategory);
     const [status, setStatus] = useState<Status>(defaultStatus);
     const [priority, setPriority] = useState<Priority>(defaultPriority);
@@ -44,10 +44,19 @@ const TaskInput: React.FC<TaskInputProps> = ({
 
     const handleSubmit = () => {
         if (!name.trim() || loading) return;
-        onCreateTask({name, details, dueDate, category, status, priority, complexity});
+        onCreateTask({
+            name,
+            details,
+            dueDate,
+            category,
+            status,
+            priority,
+            complexity,
+        });
+
         setName("");
         setDetails("");
-        setDueDate(new Date("2025-12-12"));
+        setDueDate(undefined);
         setCategory(Category.SONSTIGE);
         setStatus(Status.TODO);
         setPriority(Priority.MEDIUM);
@@ -77,8 +86,10 @@ const TaskInput: React.FC<TaskInputProps> = ({
                 inputId={`task-due-${category}`}
                 hideLabelOptional
                 label="Fälligkeitsdatum"
-                value={dueDate}
-                onChange={(nextValue: Date) => setDueDate(nextValue)}
+                value={dueDate ? new Date(dueDate) : undefined}
+                onChange={(nextValue: Date) =>
+                    setDueDate(nextValue.toISOString().split("T")[0])
+                }
                 disabled={loading}
             />
 
