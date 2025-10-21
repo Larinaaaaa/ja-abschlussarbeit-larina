@@ -66,7 +66,8 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                 <button
                     className="round-plus-button"
                     onClick={() => setShowTaskInput(!showTaskInput)}
-                >+</button>
+                >+
+                </button>
             </div>
 
             {showTaskInput && (
@@ -94,20 +95,18 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                     checked={completedTasks[task.id]}
                                     onChange={() => toggleCompleted(task.id)}
                                 />
-                                <Text variant="order4" weight="bold">{task.name}</Text>
+                                <div className="task-subline">
+                                    <Text variant="order4" weight="bold">{task.name}</Text>
+                                    <Text variant="copy1" weight="normal">{task.details}</Text>
+                                    <Text variant="copy3"
+                                          weight="normal">Komplexität: {complexityLabels[task.complexity]} & Priorität: {priorityLabels[task.priority]}</Text>
+                                    <Text variant="copy2"
+                                          weight="bold">{`Vom: ${task.created ? new Date(task.created).toLocaleDateString("de-DE") : "-"}`}</Text>
+                                </div>
                             </div>
                         }
                         hint={`Fällig am ${task.dueDate ? new Date(task.dueDate).toLocaleDateString("de-DE") : "-"}`}
                         hintSeverity="informative"
-                        subline={
-                            <div className="task-subline">
-                                <Text variant="copy1" weight="normal">{task.details}</Text>
-                                <Text variant="copy3" weight="normal">Komplexität: {complexityLabels[task.complexity]}</Text>
-                                <Text variant="copy3" weight="normal">Priorität: {priorityLabels[task.priority]}</Text>
-                                <Text variant="copy2"
-                                      weight="bold">{`Vom: ${task.created ? new Date(task.created).toLocaleDateString("de-DE") : "-"}`}</Text>
-                            </div>
-                        }
                     >
                         <div className="accordion-content">
                             <SubtaskList subtasks={subTasksByTask[task.id] || []}/>
@@ -115,7 +114,8 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                             <button
                                 className="round-plus-button"
                                 onClick={() => toggleInput(task.id)}
-                            >+</button>
+                            >+
+                            </button>
                             {inputVisibility[task.id] && (
                                 <SubtaskInput
                                     taskId={task.id}
