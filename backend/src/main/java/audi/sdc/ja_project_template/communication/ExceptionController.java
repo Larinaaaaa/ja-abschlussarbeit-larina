@@ -1,6 +1,7 @@
 package audi.sdc.ja_project_template.communication;
 
 import audi.sdc.ja_project_template.model.exception.DatabaseException;
+import audi.sdc.ja_project_template.model.exception.IllegalDateException;
 import audi.sdc.ja_project_template.repository.NotPersistedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,5 +30,11 @@ public class ExceptionController extends ResponseEntityExceptionHandler {
     protected ResponseEntity<Object> handleNotPersistedException(Exception ex, WebRequest request) {
         return handleExceptionInternal(ex, ex.getMessage(),
                 new HttpHeaders(), HttpStatus.NOT_FOUND, request);
+    }
+
+    @ExceptionHandler(value = {IllegalDateException.class})
+    protected ResponseEntity<Object> handleInvalidRequestException(IllegalDateException ex, WebRequest request) {
+        return handleExceptionInternal(ex, ex.getMessage(),
+                new HttpHeaders(), HttpStatus.BAD_REQUEST, request);
     }
 }

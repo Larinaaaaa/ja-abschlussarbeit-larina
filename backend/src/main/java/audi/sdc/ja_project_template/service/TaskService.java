@@ -5,9 +5,11 @@ import audi.sdc.ja_project_template.model.enums.Category;
 import audi.sdc.ja_project_template.model.enums.Complexity;
 import audi.sdc.ja_project_template.model.enums.Priority;
 import audi.sdc.ja_project_template.model.enums.Status;
+import audi.sdc.ja_project_template.model.exception.IllegalDateException;
 import audi.sdc.ja_project_template.repository.TaskRepository;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,6 +51,10 @@ public class TaskService {
     }
 
     public Task createTask(Task task) {
+        int compareDates = task.getDueDate().compareTo(LocalDate.now());
+        if (compareDates < 0) {
+            throw new IllegalDateException("Date is in the past.");
+        }
         return taskRepository.save(task);
     }
 
