@@ -64,10 +64,9 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
             <div className="category-header">
                 <Text as="h1" weight="bold" variant="order4">{title}</Text>
                 <button
-                    className="round-plus-button"
+                    className="round-plus-button-black"
                     onClick={() => setShowTaskInput(!showTaskInput)}
-                >+
-                </button>
+                >+</button>
             </div>
 
             {showTaskInput && (

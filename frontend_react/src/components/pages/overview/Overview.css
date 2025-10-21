@@ -76,11 +76,35 @@ html, body, #root {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0;
+    border: 1px solid black;
+    border-radius: 30%;
+    outline: none;
 }
 
 .round-plus-button:hover {
     transform: scale(1.1);
+}
+
+.round-plus-button-black {
+    margin-left: 20px;
+    width: 30px;
+    height: 30px;
+    background-color: #000000;
+    color: #ffffff;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+    border-radius: 30%;
+    outline: none;
+}
+
+.round-plus-button-black:hover {
+    background-color: #ffffff;
+    color: #000000;
 }
 
 .subtask-input-row{
