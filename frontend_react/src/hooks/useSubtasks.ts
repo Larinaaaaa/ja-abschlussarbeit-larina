@@ -60,6 +60,31 @@ export function useSubTasks() {
         }
     };
 
+    const updateSubTask = async (taskId: number, subtaskId: number, updatedData: { name: string; completed: boolean }) => {
+        setLoading(true);
+        setError(null);
 
-    return {subTasksByTask, addSubTask, loading, error};
+        try {
+            const result = await updateSubtask({
+                taskId,
+                name: updatedData.name,
+                completed: updatedData.completed
+            });
+
+            if (result) {
+                setSubTasksByTask(prev => ({
+                    ...prev,
+                    [taskId]: prev[taskId].map(subtask =>
+                        subtask.id === subtaskId ? result : subtask
+                    ),
+                }));
+            }
+        } catch (err) {
+            setError((err as Error).message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return {subTasksByTask, addSubTask, updateSubTask, loading, error};
 }
