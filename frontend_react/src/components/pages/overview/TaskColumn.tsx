@@ -59,6 +59,10 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
         setInputVisibility(prev => ({...prev, [taskId]: !prev[taskId]}));
     };
 
+    const handleEditSubtask = (taskId: number) => {
+
+    }
+
     return (
         <div className="overview-column">
             <div className="category-header">
@@ -66,7 +70,8 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                 <button
                     className="round-plus-button-black"
                     onClick={() => setShowTaskInput(!showTaskInput)}
-                >+</button>
+                >+
+                </button>
             </div>
 
             {showTaskInput && (
@@ -97,13 +102,16 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                 />
                                 <div className="task-subline">
                                     <Text variant="order4" weight="bold">{task.name}
-                                        <button id="edit-button"><Text variant="copy3" weight="bold">Bearbeiten</Text></button>
-                                        <button id="edit-button"><Text variant="copy3"  weight="bold">Löschen</Text></button>
+                                        <button id="edit-button"><Text variant="copy3" weight="bold">Bearbeiten</Text>
+                                        </button>
+                                        <button id="edit-button"><Text variant="copy3" weight="bold">Löschen</Text>
+                                        </button>
 
                                     </Text>
-                                <Text variant="copy1" weight="normal">{task.details}</Text>
+                                    <Text variant="copy1" weight="normal">{task.details}</Text>
                                     <Text variant="copy3"
-                                          weight="normal">Komplexität: {complexityLabels[task.complexity]} & Priorität: {priorityLabels[task.priority]}</Text>
+                                          weight="normal">Komplexität: {complexityLabels[task.complexity]} &
+                                        Priorität: {priorityLabels[task.priority]}</Text>
                                     <Text variant="copy2"
                                           weight="bold">{`Vom: ${task.created ? new Date(task.created).toLocaleDateString("de-DE") : "-"}`}</Text>
                                 </div>
@@ -113,6 +121,13 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                         hintSeverity="informative"
                     >
                         <div className="accordion-content">
+                            {subTasksByTask[task.id] && subTasksByTask[task.id].length > 0 && (
+                                <button
+                                    id="round-plus-edit-button"
+                                    onClick={handleEditSubtask}>
+                                    <Text variant="copy2">Bearbeiten</Text>
+                                </button>
+                            )}
                             <SubtaskList subtasks={subTasksByTask[task.id] || []}/>
 
                             <button
