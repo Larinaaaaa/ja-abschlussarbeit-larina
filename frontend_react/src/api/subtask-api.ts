@@ -37,3 +37,31 @@ export async function createSubTask(subtask: {
         return null;
     }
 }
+
+export async function updateSubtask(subtask: {
+    taskId: number;
+    name: string;
+    completed: boolean
+}) {
+    try {
+        const response = await fetch(`http://localhost:8080/api/subtasks/${subtask.taskId}`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                name: subtask.name,
+                completed: subtask.completed,
+                taskId: subtask.taskId,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+        return await response.json();
+    } catch (e) {
+        console.error("Fehler beim aktualisieren der Aufgabe: ", e);
+        return null;
+    }
+}
