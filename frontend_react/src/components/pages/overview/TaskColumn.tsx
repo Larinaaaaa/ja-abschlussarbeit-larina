@@ -76,6 +76,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                     defaultComplexity={title as unknown as Complexity}
                     defaultPriority={title as unknown as Priority}
                     onCreateTask={handleCreateTask}
+                    onCancel={() => setShowTaskInput(false)}
                     loading={loading}
                     error={error}
                 />
@@ -97,6 +98,8 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                 <div className="task-subline">
                                     <Text variant="order4" weight="bold">{task.name}
                                         <button id="edit-button"><Text variant="copy3" weight="bold">Bearbeiten</Text></button>
+                                        <button id="edit-button"><Text variant="copy3"  weight="bold">Löschen</Text></button>
+
                                     </Text>
                                 <Text variant="copy1" weight="normal">{task.details}</Text>
                                     <Text variant="copy3"

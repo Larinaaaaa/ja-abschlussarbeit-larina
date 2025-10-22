@@ -114,14 +114,20 @@ html, body, #root {
 }
 
 .subtask-add-button {
-    margin-top: 17px;
-    background-color: #000000;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    float: right;
+
 }
 
 .subtask-add-button .button-text {
     color: white;
+}
+
+.subtask-cancel-button {
+    float: right;
+}
+
+.subtask-cancel-button .button-text {
+    color: black;
 }
 
 .category-header {
@@ -143,4 +149,5 @@ html, body, #root {
     margin-left: 5px;
     background-color: #ffffff;
     color: #ffffff;
+    border-radius: 5%;
 }

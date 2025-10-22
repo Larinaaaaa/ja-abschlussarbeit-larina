@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {DatePicker, Select, Text, TextField} from "@audi/audi-ui-react";
+import {DatePicker, Select, Text, TextField, Button} from "@audi/audi-ui-react";
 import {Category} from "../../../model/enums/Category.ts";
 import {Status} from "../../../model/enums/Status.ts";
 import {Priority} from "../../../model/enums/Priority.ts";
@@ -20,6 +20,7 @@ interface TaskInputProps {
         priority: Priority;
         complexity: Complexity;
     }) => void;
+    onCancel: () => void;
     loading?: boolean;
     error?: string | null;
 }
@@ -30,6 +31,7 @@ const TaskInput: React.FC<TaskInputProps> = ({
                                                  defaultPriority,
                                                  defaultComplexity,
                                                  onCreateTask,
+                                                 onCancel,
                                                  loading,
                                                  error,
                                              }) => {
@@ -170,15 +172,29 @@ const TaskInput: React.FC<TaskInputProps> = ({
                 </React.Fragment>
             </Select>
 
-            <button
+            <Button
+                variant="primary"
+                size="small"
                 className="subtask-add-button"
                 onClick={handleSubmit}
                 disabled={loading}
             >
-                <Text variant="copy2" className="button-text">
+                <Text variant="copy1" className="button-text">
                     {loading ? "Speichert..." : "Erstellen"}
                 </Text>
-            </button>
+            </Button>
+
+            <Button
+                variant="secondary"
+                size="small"
+                className="subtask-cancel-button"
+                onClick={onCancel}
+                disabled={loading}
+            >
+                <Text variant="copy1" className="button-text">
+                    Abbrechen
+                </Text>
+            </Button>
 
             {error && <Text variant="copy2">{error}</Text>}
         </div>
