@@ -124,6 +124,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                 <SubtaskInput
                                     taskId={task.id}
                                     onCreateSubtask={handleCreateSubtask}
+                                    onCancel={() => toggleInput(task.id)}
                                     loading={loading}
                                     error={error}
                                 />

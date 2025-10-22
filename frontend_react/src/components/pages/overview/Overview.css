@@ -114,19 +114,52 @@ html, body, #root {
 }
 
 .subtask-add-button {
-    float: right;
+    margin-top: 17px;
+    background-color: #000000;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    border: solid black;
+    outline: black;
+}
 
+.subtask-add-button:hover {
+        background-color: #3b3b3b;
+        border: solid #3b3b3b;
+        outline: #3b3b3b;
 }
 
 .subtask-add-button .button-text {
     color: white;
 }
-
 .subtask-cancel-button {
+    margin-top: 17px;
+    background-color: #ffffff;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border: 1px solid black;
+}
+
+.subtask-cancel-button-text {
+    color: black;
+}
+
+.subtask-cancel-button:hover {
+    background-color: #cbcbcb;
+}
+
+.task-add-button {
     float: right;
 }
 
-.subtask-cancel-button .button-text {
+.task-add-button .button-text {
+    color: white;
+}
+
+.task-cancel-button {
+    float: right;
+}
+
+.task-cancel-button .button-text {
     color: black;
 }
 

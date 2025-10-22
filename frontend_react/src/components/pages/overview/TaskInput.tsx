@@ -175,7 +175,7 @@ const TaskInput: React.FC<TaskInputProps> = ({
             <Button
                 variant="primary"
                 size="small"
-                className="subtask-add-button"
+                className="task-add-button"
                 onClick={handleSubmit}
                 disabled={loading}
             >
@@ -187,7 +187,7 @@ const TaskInput: React.FC<TaskInputProps> = ({
             <Button
                 variant="secondary"
                 size="small"
-                className="subtask-cancel-button"
+                className="task-cancel-button"
                 onClick={onCancel}
                 disabled={loading}
             >
