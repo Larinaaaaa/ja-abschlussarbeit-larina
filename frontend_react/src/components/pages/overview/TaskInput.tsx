@@ -88,6 +88,7 @@ const TaskInput: React.FC<TaskInputProps> = ({
                 inputId={`task-due-${category}`}
                 hideLabelOptional
                 label="Fälligkeitsdatum"
+                minDate={new Date()}
                 value={dueDate ? new Date(dueDate) : undefined}
                 onChange={(nextValue: Date) =>
                     setDueDate(nextValue.toISOString().split("T")[0])

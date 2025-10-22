@@ -102,9 +102,11 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                 />
                                 <div className="task-subline">
                                     <Text variant="order4" weight="bold">{task.name}
-                                        <button id="edit-button"><Text variant="copy3" weight="bold">Bearbeiten</Text>
+                                        <button id="edit-button">
+                                            <Text variant="copy3" weight="bold" className="button-text">Bearbeiten</Text>
                                         </button>
-                                        <button id="edit-button"><Text variant="copy3" weight="bold">Löschen</Text>
+                                        <button id="edit-button">
+                                            <Text variant="copy3" weight="bold" className="button-text">Löschen</Text>
                                         </button>
 
                                     </Text>

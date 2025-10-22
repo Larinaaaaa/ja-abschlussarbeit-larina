@@ -8,16 +8,23 @@ interface SubtaskInputProps {
     onCancel: () => void;
     loading?: boolean;
     error?: string | null;
+    initialValue?: string;
 }
 
 const SubtaskInput: React.FC<SubtaskInputProps> = ({taskId, onCreateSubtask, onCancel, loading, error}) => {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(initialValue || "");
+    const [editingSubtaskId, setEditingSubtaskId] = useState<number | null>(null);
 
     const handleSubmit = () => {
         const name = value.trim();
         if (!name || loading) return;
         onCreateSubtask(taskId, name);
         setValue("");
+    };
+
+    const handleEditSubtask = (taskId: number, subtaskId: number, currentName: string) => {
+        setEditingSubtaskId(subtaskId);
+        setInputVisibility(prev => ({ ...prev, [taskId]: true }));
     };
 
     return (
