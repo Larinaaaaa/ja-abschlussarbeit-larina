@@ -2,11 +2,8 @@ import './Overview.css'
 import { Task } from '../../../model/Task'
 import { Category } from '../../../model/enums/Category.ts'
 import TaskColumn from './TaskColumn'
+import {useTasks} from "../../../hooks/useTasks.ts";
 import {useSubTasks} from "../../../hooks/useSubtasks.ts";
-
-interface OverviewProps {
-    tasks: Task[]
-}
 
 const categoryLabels: Record<Category, string> = {
     [Category.BIZ]: "BIZ",
@@ -14,13 +11,14 @@ const categoryLabels: Record<Category, string> = {
     [Category.SONSTIGE]: "Sonstige",
 }
 
-const Overview: React.FC<OverviewProps> = ({ tasks }) => {
-    const { subTasksByTask, addSubTask, updateSubTask, loading, error } = useSubTasks();
+const Overview: React.FC = () => {
+    const { tasks, addTask, loading, error } = useTasks();
+    const { subTasksByTask, addSubTask, updateSubTask } = useSubTasks();
 
     const categorizedTasks = tasks.reduce<Record<Category, Task[]>>((acc, task) => {
-        const cat = categoryLabels[task.category] ? task.category : Category.SONSTIGE
-        acc[cat] = acc[cat] || []
-        acc[cat].push(task)
+        const category = categoryLabels[task.category] ? task.category : Category.SONSTIGE
+        acc[category] = acc[category] || []
+        acc[category].push(task)
         return acc
     }, { [Category.BIZ]: [], [Category.VS]: [], [Category.SONSTIGE]: [] })
 
@@ -32,6 +30,7 @@ const Overview: React.FC<OverviewProps> = ({ tasks }) => {
                     title={categoryLabels[category]}
                     tasks={categorizedTasks[category]}
                     subTasksByTask={subTasksByTask}
+                    handleCreateTask={addTask}
                     handleCreateSubtask={addSubTask}
                     handleUpdateSubtask={updateSubTask}
                     loading={loading}

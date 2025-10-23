@@ -28,7 +28,7 @@ export function useTasks() {
     const addTask = async (task: {
         name: string;
         details: string;
-        dueDate: string;
+        dueDate?: string;
         category: Category;
         status: Status;
         priority: Priority;
@@ -36,22 +36,22 @@ export function useTasks() {
     }) => {
         setLoading(true);
         setError(null);
-        setMessage(null);
 
         try {
-            const { task: created, status } = await createTask({
+            const created = await createTask({
                 ...task,
+                dueDate: task.dueDate ?? new Date().toISOString().split("T")[0],
                 created: new Date().toISOString().split("T")[0],
                 subtasks: [],
             });
+
             if (created) {
                 setTasks(prev => [...prev, created]);
-                setMessage(`Aufgabe erfolgreich erstellt (Status ${status})`);
             } else {
-                setError(`Fehler beim Erstellen der Aufgabe (Status ${status})`);
+                setError("Fehler beim Erstellen der Aufgabe");
             }
         } catch (err) {
-            setError("Serverfehler (Status unbekannt)");
+            setError((err as Error).message);
         } finally {
             setLoading(false);
         }

@@ -5,7 +5,6 @@ import {Task} from "../../../model/Task";
 import {SubTask} from "../../../model/SubTask";
 import SubtaskList from "./SubtaskList";
 import SubtaskInput from "./SubtaskInput";
-import {useTasks} from "../../../hooks/useTasks.ts";
 import TaskInput from "./TaskInput.tsx";
 import {Category} from "../../../model/enums/Category.ts";
 import {Status} from "../../../model/enums/Status.ts";
@@ -17,6 +16,15 @@ interface TaskColumnProps {
     title: string;
     tasks: Task[];
     subTasksByTask: { [taskId: number]: SubTask[] };
+    handleCreateTask: (taskData: {
+        name: string;
+        details: string;
+        dueDate: string | undefined;
+        category: Category;
+        status: Status;
+        priority: Priority;
+        complexity: Complexity;
+    }) => void;
     handleCreateSubtask: (taskId: number, name: string) => void;
     handleUpdateSubtask: (subtaskId: number, taskId: number, updatedData: { name: string; completed: boolean }) => void;
     loading?: boolean;
@@ -39,6 +47,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                                    title,
                                                    tasks,
                                                    subTasksByTask,
+                                                    handleCreateTask,
                                                    handleCreateSubtask,
                                                    handleUpdateSubtask,
                                                    loading,
@@ -49,21 +58,14 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     const [showTaskInput, setShowTaskInput] = useState(false);
     const [isEditingMode, setIsEditingMode] = useState<Record<number, boolean>>({});
 
-    const toggleEditingMode = (taskId: number) => {
-        setIsEditingMode(prev => ({ ...prev, [taskId]: !prev[taskId] }));
-    };
-
     const [editingSubtask, setEditingSubtask] = useState<{
         taskId: number;
         subtaskId: number;
         name: string;
     } | null>(null);
 
-    const {addTask} = useTasks();
-
-    const handleCreateTask = async (taskData: any) => {
-        await addTask(taskData);
-        setShowTaskInput(false);
+    const toggleEditingMode = (taskId: number) => {
+        setIsEditingMode(prev => ({ ...prev, [taskId]: !prev[taskId] }));
     };
 
     const toggleCompleted = (id: number) => {
@@ -88,14 +90,15 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
             {showTaskInput && (
                 <TaskInput
                     defaultCategory={title as unknown as Category}
-                    defaultStatus={title as unknown as Status}
-                    defaultComplexity={title as unknown as Complexity}
-                    defaultPriority={title as unknown as Priority}
+                    defaultStatus={Status.TODO} // Default Status
+                    defaultComplexity={Complexity.MEDIUM}
+                    defaultPriority={Priority.MEDIUM}
                     onCreateTask={handleCreateTask}
                     onCancel={() => setShowTaskInput(false)}
                     loading={loading}
                     error={error}
                 />
+
             )}
 
             <Accordion>
