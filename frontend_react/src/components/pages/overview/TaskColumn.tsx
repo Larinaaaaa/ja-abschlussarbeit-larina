@@ -47,6 +47,11 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     const [completedTasks, setCompletedTasks] = useState<Record<number, boolean>>({});
     const [inputVisibility, setInputVisibility] = useState<Record<number, boolean>>({});
     const [showTaskInput, setShowTaskInput] = useState(false);
+    const [isEditingMode, setIsEditingMode] = useState<Record<number, boolean>>({});
+
+    const toggleEditingMode = (taskId: number) => {
+        setIsEditingMode(prev => ({ ...prev, [taskId]: !prev[taskId] }));
+    };
 
     const [editingSubtask, setEditingSubtask] = useState<{
         taskId: number;
@@ -131,41 +136,6 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                     >
                         <div className="accordion-content">
 
-                            {subTasksByTask[task.id] && subTasksByTask[task.id].length > 0 && (
-                                <button
-                                    id="edit-button"
-                                    onClick={() => {
-                                        const firstSubtask = subTasksByTask[task.id][0];
-                                        if (firstSubtask) {
-                                            setEditingSubtask({
-                                                taskId: firstSubtask.taskId,
-                                                subtaskId: firstSubtask.id!,
-                                                name: firstSubtask.name
-                                            });
-                                        }
-                                    }}
-                                >
-                                    <Text variant="copy3" weight="bold" className="button-text">
-                                        Bearbeiten
-                                    </Text>
-                                </button>
-                            )}
-
-                            <SubtaskList
-                                subtasks={subTasksByTask[task.id] || []}
-                                onSelectSubtaskToEdit={(subtaskId) => {
-                                    const subtask = subTasksByTask[task.id].find(s => s.id === subtaskId);
-                                    if (subtask) {
-                                        setEditingSubtask({
-                                            taskId: subtask.taskId,
-                                            subtaskId: subtask.id!,
-                                            name: subtask.name,
-                                        });
-                                    }
-                                }}
-                            />
-
-
                             {editingSubtask && editingSubtask.taskId === task.id && (
                                 <SubtaskEdit
                                     subtaskId={editingSubtask.subtaskId}
@@ -178,11 +148,35 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                         );
                                         setEditingSubtask(null);
                                     }}
-
                                     onCancel={() => setEditingSubtask(null)}
                                 />
                             )}
 
+                            {subTasksByTask[task.id] && subTasksByTask[task.id].length > 0 && (
+                                <button
+                                    id="edit-button"
+                                    onClick={() => toggleEditingMode(task.id)}
+                                >
+                                    <Text variant="copy3" weight="bold" className="button-text">
+                                        {isEditingMode[task.id] ? "Fertig" : "Bearbeiten"}
+                                    </Text>
+                                </button>
+                            )}
+
+                            <SubtaskList
+                                subtasks={subTasksByTask[task.id] || []}
+                                isEditingMode={isEditingMode[task.id] || false}
+                                onSelectSubtaskToEdit={(subtaskId) => {
+                                    const subtask = subTasksByTask[task.id].find(s => s.id === subtaskId);
+                                    if (subtask) {
+                                        setEditingSubtask({
+                                            taskId: subtask.taskId,
+                                            subtaskId: subtask.id!,
+                                            name: subtask.name,
+                                        });
+                                    }
+                                }}
+                            />
                             <div>
                                 <button
                                     className="round-plus-button"
@@ -199,6 +193,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                     error={error}
                                 />
                             )}
+
                         </div>
                     </AccordionSection>
                 ))}
