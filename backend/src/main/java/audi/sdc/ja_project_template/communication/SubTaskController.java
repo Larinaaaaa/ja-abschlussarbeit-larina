@@ -2,6 +2,7 @@ package audi.sdc.ja_project_template.communication;
 
 import audi.sdc.ja_project_template.model.SubTask;
 import audi.sdc.ja_project_template.model.Task;
+import audi.sdc.ja_project_template.model.exception.ResourceNotFoundException;
 import audi.sdc.ja_project_template.service.SubTaskService;
 import audi.sdc.ja_project_template.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,22 +72,30 @@ public class SubTaskController {
 
     @PutMapping("/{id}")
     public ResponseEntity<SubTask> updateSubTask(@PathVariable Long id, @RequestBody Map<String, Object> payload) {
-        String name = payload.get("name").toString();
-        Boolean completed = Boolean.valueOf(payload.get("completed").toString());
-        Long taskId = Long.valueOf(payload.get("taskId").toString());
+        try {
+            String name = payload.get("name").toString();
+            Boolean completed = Boolean.valueOf(payload.get("completed").toString());
+            Long taskId = Long.valueOf(payload.get("taskId").toString());
 
-        SubTask subTask = subTaskService.findById(id)
-                .orElseThrow(() -> new RuntimeException("Subtask nicht gefunden"));
+            SubTask subTask = subTaskService.findById(id)
+                    .orElseThrow(() -> new ResourceNotFoundException("Subtask nicht gefunden"));
 
-        subTask.setName(name);
-        subTask.setCompleted(completed);
+            subTask.setName(name);
+            subTask.setCompleted(completed);
 
-        Task task = taskService.findById(taskId)
-                .orElseThrow(() -> new RuntimeException("Task nicht gefunden"));
-        subTask.setTask(task);
+            Task task = taskService.findById(taskId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Task nicht gefunden"));
 
-        SubTask saved = subTaskService.updateSubTask(subTask);
-        return ResponseEntity.ok(saved);
+            subTask.setTask(task);
+            SubTask saved = subTaskService.updateSubTask(subTask);
+
+            return ResponseEntity.ok(saved);
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(404).body(null);
+        } catch (Exception e) {
+            e.printStackTrace(); // für Debugging
+            return ResponseEntity.status(500).body(null);
+        }
     }
 
 

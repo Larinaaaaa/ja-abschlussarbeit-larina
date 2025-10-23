@@ -11,13 +11,14 @@ import {Category} from "../../../model/enums/Category.ts";
 import {Status} from "../../../model/enums/Status.ts";
 import {Complexity} from "../../../model/enums/Complexity.ts";
 import {Priority} from "../../../model/enums/Priority.ts";
+import SubtaskEdit from "./SubtaskEdit.tsx";
 
 interface TaskColumnProps {
     title: string;
     tasks: Task[];
     subTasksByTask: { [taskId: number]: SubTask[] };
     handleCreateSubtask: (taskId: number, name: string) => void;
-    handleUpdateSubtask: (taskId: number, subtaskId: number, updatedData: { name: string; completed: boolean }) => void;
+    handleUpdateSubtask: (subtaskId: number, taskId: number, updatedData: { name: string; completed: boolean }) => void;
     loading?: boolean;
     error?: string | null;
 }
@@ -47,9 +48,11 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     const [inputVisibility, setInputVisibility] = useState<Record<number, boolean>>({});
     const [showTaskInput, setShowTaskInput] = useState(false);
 
-    const [editModeTaskId, setEditModeTaskId] = useState<number | null>(null);
-    const [selectedSubtaskId, setSelectedSubtaskId] = useState<number | null>(null);
-    const [editValue, setEditValue] = useState("");
+    const [editingSubtask, setEditingSubtask] = useState<{
+        taskId: number;
+        subtaskId: number;
+        name: string;
+    } | null>(null);
 
     const {addTask} = useTasks();
 
@@ -65,35 +68,6 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     const toggleInput = (taskId: number) => {
         setInputVisibility(prev => ({...prev, [taskId]: !prev[taskId]}));
     };
-
-    const handleEditSubtask = (taskId: number) => {
-        setEditModeTaskId(taskId);
-        setSelectedSubtaskId(null);
-        setEditValue("");
-    };
-
-    const handleSelectSubtaskToEdit = (subtaskId: number, currentName: string) => {
-        setSelectedSubtaskId(subtaskId);
-        setEditValue(currentName);
-    };
-
-    const handleConfirmEdit = async () => {
-        if (!editModeTaskId || !selectedSubtaskId || !editValue.trim()) return;
-
-        try {
-            await handleUpdateSubtask(editModeTaskId, selectedSubtaskId, {
-                name: editValue,
-                completed: false,
-            });
-        } catch (err) {
-            console.error("Fehler beim Aktualisieren der Unteraufgabe:", err);
-        } finally {
-            setEditModeTaskId(null);
-            setSelectedSubtaskId(null);
-            setEditValue("");
-        }
-    };
-
 
     return (
         <div className="overview-column">
@@ -158,9 +132,20 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                         <div className="accordion-content">
 
                             {subTasksByTask[task.id] && subTasksByTask[task.id].length > 0 && (
-                                <button id="edit-button" onClick={() => handleEditSubtask(task.id)}>
-                                    <Text variant="copy3" weight="bold"
-                                          className="button-text">
+                                <button
+                                    id="edit-button"
+                                    onClick={() => {
+                                        const firstSubtask = subTasksByTask[task.id][0];
+                                        if (firstSubtask) {
+                                            setEditingSubtask({
+                                                taskId: firstSubtask.taskId,
+                                                subtaskId: firstSubtask.id!,
+                                                name: firstSubtask.name
+                                            });
+                                        }
+                                    }}
+                                >
+                                    <Text variant="copy3" weight="bold" className="button-text">
                                         Bearbeiten
                                     </Text>
                                 </button>
@@ -168,19 +153,34 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
 
                             <SubtaskList
                                 subtasks={subTasksByTask[task.id] || []}
-                                subtaskEditVisibility={editModeTaskId === task.id}
-                                onSelectSubtaskToEdit={handleSelectSubtaskToEdit}/>
+                                onSelectSubtaskToEdit={(subtaskId) => {
+                                    const subtask = subTasksByTask[task.id].find(s => s.id === subtaskId);
+                                    if (subtask) {
+                                        setEditingSubtask({
+                                            taskId: subtask.taskId,
+                                            subtaskId: subtask.id!,
+                                            name: subtask.name,
+                                        });
+                                    }
+                                }}
+                            />
 
-                            {editModeTaskId === task.id && selectedSubtaskId && (
-                                <div className="edit-controls">
-                                    <input
-                                        type="text"
-                                        value={editValue}
-                                        onChange={(e) => setEditValue(e.target.value)}
-                                    />
-                                    <button onClick={handleConfirmEdit}>Speichern</button>
-                                    <button onClick={() => setEditModeTaskId(null)}>Abbrechen</button>
-                                </div>
+
+                            {editingSubtask && editingSubtask.taskId === task.id && (
+                                <SubtaskEdit
+                                    subtaskId={editingSubtask.subtaskId}
+                                    initialName={editingSubtask.name}
+                                    onSave={(newName) => {
+                                        handleUpdateSubtask(
+                                            editingSubtask.subtaskId,
+                                            editingSubtask.taskId,
+                                            { name: newName, completed: false }
+                                        );
+                                        setEditingSubtask(null);
+                                    }}
+
+                                    onCancel={() => setEditingSubtask(null)}
+                                />
                             )}
 
                             <div>

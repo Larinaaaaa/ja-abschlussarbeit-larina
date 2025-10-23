@@ -29,21 +29,22 @@ export async function createTask(task: CreateTaskRequest): Promise<Task> {
         if (!response.ok) {
             const errorText = await response.text();
             console.error(`Server error ${status}:`, errorText);
-            return { task: null, status };
+            return { task: null };
         }
 
         const createdTask: Task = await response.json();
-        return { task: createdTask, status };
+        return { task: createdTask };
     } catch (e) {
         console.error("Fehler beim erstellen der Aufgabe: ", e);
         throw e
     }
 }
 
-export async function updateTask(taskId){
+/*export async function updateTask(taskId){
     const response = await fetch('http://localhost:8080/api/tasks/{id}', {
         method: "PUT",
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(task),
     });
 }
+ */
