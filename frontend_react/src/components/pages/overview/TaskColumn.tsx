@@ -20,10 +20,10 @@ interface TaskColumnProps {
         name: string;
         details: string;
         dueDate: string | undefined;
-        category: Category;
-        status: Status;
-        priority: Priority;
-        complexity: Complexity;
+        category?: Category;
+        status?: Status;
+        priority?: Priority;
+        complexity?: Complexity;
     }) => void;
     handleCreateSubtask: (taskId: number, name: string) => void;
     handleUpdateSubtask: (subtaskId: number, taskId: number, updatedData: { name: string; completed: boolean }) => void;
@@ -89,10 +89,6 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
 
             {showTaskInput && (
                 <TaskInput
-                    defaultCategory={title as unknown as Category}
-                    defaultStatus={Status.TODO} // Default Status
-                    defaultComplexity={Complexity.MEDIUM}
-                    defaultPriority={Priority.MEDIUM}
                     onCreateTask={handleCreateTask}
                     onCancel={() => setShowTaskInput(false)}
                     loading={loading}

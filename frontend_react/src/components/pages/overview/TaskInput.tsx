@@ -6,19 +6,15 @@ import {Priority} from "../../../model/enums/Priority.ts";
 import {Complexity} from "../../../model/enums/Complexity.ts";
 
 interface TaskInputProps {
-    defaultCategory: Category;
-    defaultStatus: Status;
-    defaultPriority: Priority;
-    defaultComplexity: Complexity;
 
     onCreateTask: (task: {
         name: string;
         details: string;
         dueDate: string | undefined;
-        category: Category;
-        status: Status;
-        priority: Priority;
-        complexity: Complexity;
+        category: Category | undefined;
+        status: Status | undefined;
+        priority: Priority | undefined;
+        complexity: Complexity | undefined;
     }) => void;
     onCancel: () => void;
     loading?: boolean;
@@ -26,10 +22,6 @@ interface TaskInputProps {
 }
 
 const TaskInput: React.FC<TaskInputProps> = ({
-                                                 defaultCategory,
-                                                 defaultStatus,
-                                                 defaultPriority,
-                                                 defaultComplexity,
                                                  onCreateTask,
                                                  onCancel,
                                                  loading,
@@ -38,11 +30,10 @@ const TaskInput: React.FC<TaskInputProps> = ({
     const [name, setName] = useState("");
     const [details, setDetails] = useState("");
     const [dueDate, setDueDate] = useState<string>();
-    const [category, setCategory] = useState<Category>(defaultCategory);
-    const [status, setStatus] = useState<Status>(defaultStatus);
-    const [priority, setPriority] = useState<Priority>(defaultPriority);
-    const [complexity, setComplexity] = useState<Complexity>(defaultComplexity);
-
+    const [category, setCategory] = useState<Category | undefined>(undefined);
+    const [status, setStatus] = useState<Status | undefined>(undefined);
+    const [priority, setPriority] = useState<Priority | undefined>(undefined);
+    const [complexity, setComplexity] = useState<Complexity | undefined>(undefined);
 
     const handleSubmit = () => {
         if (!name.trim() || loading) return;
@@ -59,10 +50,10 @@ const TaskInput: React.FC<TaskInputProps> = ({
         setName("");
         setDetails("");
         setDueDate(undefined);
-        setCategory(Category.SONSTIGE);
-        setStatus(Status.TODO);
-        setPriority(Priority.MEDIUM);
-        setComplexity(Complexity.MEDIUM);
+        setCategory(undefined as unknown as Category);
+        setStatus(undefined as unknown as Status);
+        setPriority(undefined as unknown as Priority);
+        setComplexity(undefined as unknown as Complexity);
     };
 
     return (
