@@ -39,12 +39,14 @@ export async function createSubTask(subtask: {
 }
 
 export async function updateSubtask(subtask: {
-    taskId: number;
+    subtaskId: number,
     name: string;
     completed: boolean
+    taskId: number;
 }) {
     try {
-        const response = await fetch(`http://localhost:8080/api/subtasks/${subtask.taskId}`, {
+        console.log("Aufgabe:", JSON.stringify(subtask, null, 2));
+        const response = await fetch(`http://localhost:8080/api/subtasks/${subtask.subtaskId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

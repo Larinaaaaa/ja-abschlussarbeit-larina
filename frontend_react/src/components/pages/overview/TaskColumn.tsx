@@ -17,6 +17,7 @@ interface TaskColumnProps {
     tasks: Task[];
     subTasksByTask: { [taskId: number]: SubTask[] };
     handleCreateSubtask: (taskId: number, name: string) => void;
+    handleUpdateSubtask: (taskId: number, subtaskId: number, updatedData: { name: string; completed: boolean }) => void;
     loading?: boolean;
     error?: string | null;
 }
@@ -38,12 +39,18 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                                    tasks,
                                                    subTasksByTask,
                                                    handleCreateSubtask,
+                                                   handleUpdateSubtask,
                                                    loading,
                                                    error
                                                }) => {
     const [completedTasks, setCompletedTasks] = useState<Record<number, boolean>>({});
     const [inputVisibility, setInputVisibility] = useState<Record<number, boolean>>({});
     const [showTaskInput, setShowTaskInput] = useState(false);
+
+    const [editModeTaskId, setEditModeTaskId] = useState<number | null>(null);
+    const [selectedSubtaskId, setSelectedSubtaskId] = useState<number | null>(null);
+    const [editValue, setEditValue] = useState("");
+
     const {addTask} = useTasks();
 
     const handleCreateTask = async (taskData: any) => {
@@ -60,8 +67,33 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     };
 
     const handleEditSubtask = (taskId: number) => {
+        setEditModeTaskId(taskId);
+        setSelectedSubtaskId(null);
+        setEditValue("");
+    };
 
-    }
+    const handleSelectSubtaskToEdit = (subtaskId: number, currentName: string) => {
+        setSelectedSubtaskId(subtaskId);
+        setEditValue(currentName);
+    };
+
+    const handleConfirmEdit = async () => {
+        if (!editModeTaskId || !selectedSubtaskId || !editValue.trim()) return;
+
+        try {
+            await handleUpdateSubtask(editModeTaskId, selectedSubtaskId, {
+                name: editValue,
+                completed: false,
+            });
+        } catch (err) {
+            console.error("Fehler beim Aktualisieren der Unteraufgabe:", err);
+        } finally {
+            setEditModeTaskId(null);
+            setSelectedSubtaskId(null);
+            setEditValue("");
+        }
+    };
+
 
     return (
         <div className="overview-column">
@@ -103,7 +135,8 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                 <div className="task-subline">
                                     <Text variant="order4" weight="bold">{task.name}
                                         <button id="edit-button">
-                                            <Text variant="copy3" weight="bold" className="button-text">Bearbeiten</Text>
+                                            <Text variant="copy3" weight="bold"
+                                                  className="button-text">Bearbeiten</Text>
                                         </button>
                                         <button id="edit-button">
                                             <Text variant="copy3" weight="bold" className="button-text">Löschen</Text>
@@ -123,20 +156,40 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                         hintSeverity="informative"
                     >
                         <div className="accordion-content">
+
                             {subTasksByTask[task.id] && subTasksByTask[task.id].length > 0 && (
-                                <button
-                                    id="round-plus-edit-button"
-                                    onClick={handleEditSubtask}>
-                                    <Text variant="copy2">Bearbeiten</Text>
+                                <button id="edit-button" onClick={() => handleEditSubtask(task.id)}>
+                                    <Text variant="copy3" weight="bold"
+                                          className="button-text">
+                                        Bearbeiten
+                                    </Text>
                                 </button>
                             )}
-                            <SubtaskList subtasks={subTasksByTask[task.id] || []}/>
 
-                            <button
-                                className="round-plus-button"
-                                onClick={() => toggleInput(task.id)}
-                            >+
-                            </button>
+                            <SubtaskList
+                                subtasks={subTasksByTask[task.id] || []}
+                                subtaskEditVisibility={editModeTaskId === task.id}
+                                onSelectSubtaskToEdit={handleSelectSubtaskToEdit}/>
+
+                            {editModeTaskId === task.id && selectedSubtaskId && (
+                                <div className="edit-controls">
+                                    <input
+                                        type="text"
+                                        value={editValue}
+                                        onChange={(e) => setEditValue(e.target.value)}
+                                    />
+                                    <button onClick={handleConfirmEdit}>Speichern</button>
+                                    <button onClick={() => setEditModeTaskId(null)}>Abbrechen</button>
+                                </div>
+                            )}
+
+                            <div>
+                                <button
+                                    className="round-plus-button"
+                                    onClick={() => toggleInput(task.id)}
+                                >+
+                                </button>
+                            </div>
                             {inputVisibility[task.id] && (
                                 <SubtaskInput
                                     taskId={task.id}

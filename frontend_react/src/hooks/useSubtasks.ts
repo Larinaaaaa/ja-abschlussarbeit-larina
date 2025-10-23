@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {SubTask} from "../model/SubTask";
-import {createSubTask, loadSubTasks} from "../api/subtask-api";
+import {createSubTask, loadSubTasks, updateSubtask} from "../api/subtask-api";
 
 export interface SubTasksByTask {
     [taskId: number]: SubTask[];
@@ -60,21 +60,25 @@ export function useSubTasks() {
         }
     };
 
-    const updateSubTask = async (taskId: number, subtaskId: number, updatedData: { name: string; completed: boolean }) => {
+    const updateSubTask = async (
+        subtaskId: number,
+        taskId: number,
+        updatedData: { name: string; completed: boolean }) => {
         setLoading(true);
         setError(null);
 
         try {
             const result = await updateSubtask({
-                taskId,
+                subtaskId,
                 name: updatedData.name,
-                completed: updatedData.completed
+                completed: updatedData.completed,
+                taskId
             });
 
             if (result) {
                 setSubTasksByTask(prev => ({
                     ...prev,
-                    [taskId]: prev[taskId].map(subtask =>
+                    [taskId]: (prev[taskId] ?? []).map(subtask =>
                         subtask.id === subtaskId ? result : subtask
                     ),
                 }));

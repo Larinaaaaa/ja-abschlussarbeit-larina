@@ -15,7 +15,7 @@ const categoryLabels: Record<Category, string> = {
 }
 
 const Overview: React.FC<OverviewProps> = ({ tasks }) => {
-    const { subTasksByTask, addSubTask, loading, error } = useSubTasks();
+    const { subTasksByTask, addSubTask, updateSubTask, loading, error } = useSubTasks();
 
     const categorizedTasks = tasks.reduce<Record<Category, Task[]>>((acc, task) => {
         const cat = categoryLabels[task.category] ? task.category : Category.SONSTIGE
@@ -33,6 +33,7 @@ const Overview: React.FC<OverviewProps> = ({ tasks }) => {
                     tasks={categorizedTasks[category]}
                     subTasksByTask={subTasksByTask}
                     handleCreateSubtask={addSubTask}
+                    handleUpdateSubtask={updateSubTask}
                     loading={loading}
                     error={error}
                 />

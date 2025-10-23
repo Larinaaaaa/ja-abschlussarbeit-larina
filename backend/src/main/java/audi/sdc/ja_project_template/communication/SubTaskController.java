@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.Map;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/subtasks")
 public class SubTaskController {
@@ -69,11 +70,25 @@ public class SubTaskController {
 
 
     @PutMapping("/{id}")
-    public ResponseEntity<SubTask> updateSubTask(@PathVariable Long id, @RequestBody SubTask updatedSubTask) {
-        updatedSubTask.setId(id);
-        SubTask saved = subTaskService.updateSubTask(updatedSubTask);
+    public ResponseEntity<SubTask> updateSubTask(@PathVariable Long id, @RequestBody Map<String, Object> payload) {
+        String name = payload.get("name").toString();
+        Boolean completed = Boolean.valueOf(payload.get("completed").toString());
+        Long taskId = Long.valueOf(payload.get("taskId").toString());
+
+        SubTask subTask = subTaskService.findById(id)
+                .orElseThrow(() -> new RuntimeException("Subtask nicht gefunden"));
+
+        subTask.setName(name);
+        subTask.setCompleted(completed);
+
+        Task task = taskService.findById(taskId)
+                .orElseThrow(() -> new RuntimeException("Task nicht gefunden"));
+        subTask.setTask(task);
+
+        SubTask saved = subTaskService.updateSubTask(subTask);
         return ResponseEntity.ok(saved);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSubTask(@PathVariable Long id) {
