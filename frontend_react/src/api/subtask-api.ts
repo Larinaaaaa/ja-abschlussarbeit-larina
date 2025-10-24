@@ -1,9 +1,11 @@
 import {SubTask} from "../model/SubTask.ts";
 
+const BASE_URL = "http://localhost:8080/api/subtasks";
+
 export async function loadSubTasks(): Promise<SubTask[]> {
     const subTasks: SubTask[] = [];
     try {
-        const response = await fetch('http://localhost:8080/api/subtasks');
+        const response = await fetch(`${BASE_URL}`);
         console.log(response)
         return await response.json();
 
@@ -19,7 +21,7 @@ export async function createSubTask(subtask: {
     completed: boolean
 }): Promise<SubTask | null> {
     try {
-        const response = await fetch('http://localhost:8080/api/subtasks', {
+        const response = await fetch(`${BASE_URL}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -33,7 +35,7 @@ export async function createSubTask(subtask: {
 
         return await response.json();
     } catch (e) {
-        console.error("Fehler beim erstellen der Aufgabe: ", e);
+        console.error("Fehler beim erstellen der Unteraufgabe: ", e);
         return null;
     }
 }
@@ -46,7 +48,7 @@ export async function updateSubtask(subtask: {
 }) {
     try {
         console.log("Aufgabe:", JSON.stringify(subtask, null, 2));
-        const response = await fetch(`http://localhost:8080/api/subtasks/${subtask.subtaskId}`, {
+        const response = await fetch(`${BASE_URL}/${subtask.subtaskId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -63,7 +65,24 @@ export async function updateSubtask(subtask: {
         }
         return await response.json();
     } catch (e) {
-        console.error("Fehler beim aktualisieren der Aufgabe: ", e);
+        console.error("Fehler beim aktualisieren der Unteraufgabe: ", e);
         return null;
+    }
+}
+
+export async function deleteSubtask(subtaskId: number): Promise<boolean> {
+    try {
+        const response = await fetch(`${BASE_URL}/${subtaskId}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+        return true;
+
+    } catch (e) {
+        console.error("Fehler beim löschen der Unteraufgabe: ", e);
+        return false;
     }
 }

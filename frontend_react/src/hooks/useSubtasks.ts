@@ -1,6 +1,6 @@
 import {useState, useEffect} from "react";
 import {SubTask} from "../model/SubTask";
-import {createSubTask, loadSubTasks, updateSubtask} from "../api/subtask-api";
+import {createSubTask, loadSubTasks, updateSubtask, deleteSubtask} from "../api/subtask-api";
 
 export interface SubTasksByTask {
     [taskId: number]: SubTask[];
@@ -90,5 +90,24 @@ export function useSubTasks() {
         }
     };
 
-    return {subTasksByTask, addSubTask, updateSubTask, loading, error};
+    const deleteSubTask = async (taskId: number, subtaskId: number) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const success = await deleteSubtask(subtaskId);
+            if (success) {
+                setSubTasksByTask(prev => ({
+                    ...prev,
+                    [taskId]: (prev[taskId] ?? []).filter(subtask => subtask.id !== subtaskId),
+                }));
+            }
+        } catch (err) {
+            setError((err as Error).message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return {subTasksByTask, addSubTask, updateSubTask, deleteSubTask, loading, error};
 }
