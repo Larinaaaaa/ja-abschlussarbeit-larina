@@ -6,12 +6,14 @@ interface SubtaskListProps {
     subtasks: SubTask[];
     isEditingMode: boolean;
     onSelectSubtaskToEdit: (subtaskId: number) => void;
+    onDeleteSubtask: (subtaskId: number) => void;
 }
 
 const SubtaskList: React.FC<SubtaskListProps> = ({
                                                      subtasks,
                                                      isEditingMode,
-                                                     onSelectSubtaskToEdit
+                                                     onSelectSubtaskToEdit,
+                                                     onDeleteSubtask
                                                  }) => {
     if (subtasks.length === 0) return null;
 
@@ -25,16 +27,30 @@ const SubtaskList: React.FC<SubtaskListProps> = ({
                     <Text variant="copy1">{subtask.name}</Text>
 
                     {isEditingMode && (
-                        <button
-                            id="edit-button"
-                            onClick={() => onSelectSubtaskToEdit(subtask.id!)}>
-                            <Text
-                                variant="copy3"
-                                weight="bold"
-                                className="button-text">
-                                Bearbeiten
-                            </Text>
-                        </button>
+                        <div className="subtask-buttons">
+                            <button
+                                id="edit-button"
+                                onClick={() => onSelectSubtaskToEdit(subtask.id!)}>
+                                <Text
+                                    variant="copy3"
+                                    weight="bold"
+                                    className="button-text">
+                                    Bearbeiten
+                                </Text>
+                            </button>
+                            <button
+                                id="edit-button"
+                                onClick={() => onDeleteSubtask(subtask.id!)}
+                            >
+                                <Text
+                                    variant="copy3"
+                                    weight="bold"
+                                    className="button-text"
+                                >
+                                    Löschen
+                                </Text>
+                            </button>
+                        </div>
                     )}
                 </div>
             ))}

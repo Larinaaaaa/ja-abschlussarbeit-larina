@@ -27,6 +27,7 @@ interface TaskColumnProps {
     }) => void;
     handleCreateSubtask: (taskId: number, name: string) => void;
     handleUpdateSubtask: (subtaskId: number, taskId: number, updatedData: { name: string; completed: boolean }) => void;
+    handleDeleteSubtask: (taskId: number, subtaskId: number) => void;
     loading?: boolean;
     error?: string | null;
 }
@@ -47,9 +48,10 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                                    title,
                                                    tasks,
                                                    subTasksByTask,
-                                                    handleCreateTask,
+                                                   handleCreateTask,
                                                    handleCreateSubtask,
                                                    handleUpdateSubtask,
+                                                   handleDeleteSubtask,
                                                    loading,
                                                    error
                                                }) => {
@@ -65,7 +67,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     } | null>(null);
 
     const toggleEditingMode = (taskId: number) => {
-        setIsEditingMode(prev => ({ ...prev, [taskId]: !prev[taskId] }));
+        setIsEditingMode(prev => ({...prev, [taskId]: !prev[taskId]}));
     };
 
     const toggleCompleted = (id: number) => {
@@ -143,7 +145,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                         handleUpdateSubtask(
                                             editingSubtask.subtaskId,
                                             editingSubtask.taskId,
-                                            { name: newName, completed: false }
+                                            {name: newName, completed: false}
                                         );
                                         setEditingSubtask(null);
                                     }}
@@ -174,6 +176,9 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                             name: subtask.name,
                                         });
                                     }
+                                }}
+                                onDeleteSubtask={(subtaskId) => {
+                                    handleDeleteSubtask(task.id, subtaskId);
                                 }}
                             />
                             <div>
