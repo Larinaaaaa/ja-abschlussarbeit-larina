@@ -1,11 +1,11 @@
-import { SubTask } from './SubTask.ts'
+import { SubTask } from './SubTask.ts';
 import {Status} from "./enums/Status.ts";
 import {Category} from "./enums/Category.ts";
 import {Priority} from "./enums/Priority.ts";
 import {Complexity} from "./enums/Complexity.ts";
 
 export interface Task {
-    id: number
+    id?: number
     name: string
     created: string
     dueDate: string | undefined;
@@ -16,5 +16,3 @@ export interface Task {
     status: Status
     subtasks: SubTask[]
 }
-
-export type CreateTaskRequest = Omit<Task, "id">;

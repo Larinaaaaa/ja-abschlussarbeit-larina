@@ -1,4 +1,4 @@
-import {Task, CreateTaskRequest} from "../model/Task.ts";
+import {Task} from "../model/Task.ts";
 
 export async function loadTasks(): Promise<Task[]> {
     try {
@@ -16,7 +16,7 @@ export async function loadTasks(): Promise<Task[]> {
     }
 }
 
-export async function createTask(task: CreateTaskRequest): Promise<Task | null> {
+export async function createTask(task: Task): Promise<Task | null> {
     try {
         console.log("Aufgabe:", JSON.stringify(task, null, 2));
         const response = await fetch('http://localhost:8080/api/tasks', {
@@ -31,8 +31,7 @@ export async function createTask(task: CreateTaskRequest): Promise<Task | null> 
             return null;
         }
 
-        const createdTask: Task = await response.json();
-        return createdTask;
+        return await response.json();
     } catch (e) {
         console.error("Fehler beim erstellen der Aufgabe: ", e);
         return null;

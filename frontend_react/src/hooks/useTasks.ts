@@ -29,10 +29,10 @@ export function useTasks() {
         name: string;
         details: string;
         dueDate?: string;
-        category: Category;
-        status: Status;
-        priority: Priority;
-        complexity: Complexity;
+        category?: Category;
+        status?: Status;
+        priority?: Priority;
+        complexity?: Complexity;
     }) => {
         setLoading(true);
         setError(null);
@@ -42,7 +42,11 @@ export function useTasks() {
                 ...task,
                 dueDate: task.dueDate ?? new Date().toISOString().split("T")[0],
                 created: new Date().toISOString().split("T")[0],
-                subtasks: [],
+                category: task.category ?? Category.SONSTIGE,
+                status: task.status ?? Status.OPEN,
+                priority: task.priority ?? Priority.MEDIUM,
+                complexity: task.complexity ?? Complexity.MEDIUM,
+                subtasks: []
             });
 
             if (created) {

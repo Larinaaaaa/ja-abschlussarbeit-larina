@@ -1,4 +1,4 @@
-package audi.sdc.ja_project_template.repository;
+package audi.sdc.ja_project_template.model.exception;
 
 public class NotPersistedException extends Exception {
     public NotPersistedException(Object notPersistedEntity) {

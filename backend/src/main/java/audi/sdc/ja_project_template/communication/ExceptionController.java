@@ -2,7 +2,7 @@ package audi.sdc.ja_project_template.communication;
 
 import audi.sdc.ja_project_template.model.exception.DatabaseException;
 import audi.sdc.ja_project_template.model.exception.IllegalDateException;
-import audi.sdc.ja_project_template.repository.NotPersistedException;
+import audi.sdc.ja_project_template.model.exception.NotPersistedException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

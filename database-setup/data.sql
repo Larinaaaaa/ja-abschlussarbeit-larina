@@ -7,30 +7,30 @@ USE tracker_db;
 DROP TABLE IF EXISTS subtask;
 DROP TABLE IF EXISTS task;
 
--- Neue Tabellen erstellen (Entity-konform)
+-- Neue Tabellen erstellen
 CREATE TABLE task
 (
-    id         BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id         INT PRIMARY KEY AUTO_INCREMENT,
     name       VARCHAR(255) NOT NULL,
     created    DATE,
-    due_date    DATE,
+    due_date   DATE,
     details    TEXT,
-    category   VARCHAR(100),
-    priority   VARCHAR(100),
-    complexity VARCHAR(100),
-    status     VARCHAR(100)
+    category   VARCHAR(15),
+    priority   VARCHAR(15),
+    complexity VARCHAR(15),
+    status     VARCHAR(15)
 );
 
 CREATE TABLE subtask
 (
-    id        BIGINT PRIMARY KEY AUTO_INCREMENT,
+    id        INT PRIMARY KEY AUTO_INCREMENT,
     name      VARCHAR(255) NOT NULL,
-    completed BOOLEAN      NOT NULL DEFAULT FALSE,
-    task_id   BIGINT,
+    completed BOOLEAN NOT NULL DEFAULT FALSE,
+    task_id   INT,
     FOREIGN KEY (task_id) REFERENCES task (id) ON DELETE CASCADE
 );
 
--- Beispieldaten einfügen
+-- Statische Daten einfügen
 INSERT INTO task (name, created, due_date, details, category, priority, complexity, status)
 VALUES ('Projekt vorbereiten', '2025-09-03', '2025-09-15',
         'Projektplan erstellen und Ressourcen klären', 'VS', 'HIGH', 'HIGH', 'OPEN'),
