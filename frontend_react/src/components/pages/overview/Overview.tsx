@@ -32,6 +32,7 @@ const Overview: React.FC = () => {
                     subTasksByTask={subTasksByTask}
                     handleCreateTask={addTask}
                     handleUpdateTask={updateTaskHandler}
+                    handleDeleteTask={}
                     handleCreateSubtask={addSubTask}
                     handleUpdateSubtask={updateSubTask}
                     handleDeleteSubtask={deleteSubTask}

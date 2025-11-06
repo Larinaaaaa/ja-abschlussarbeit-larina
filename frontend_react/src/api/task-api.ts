@@ -4,9 +4,11 @@ import {Status} from "../model/enums/Status.ts";
 import {Priority} from "../model/enums/Priority.ts";
 import {Complexity} from "../model/enums/Complexity.ts";
 
+const BASE_URL = "http://localhost:8080/api/tasks";
+
 export async function loadTasks(): Promise<Task[]> {
     try {
-        const response = await fetch('http://localhost:8080/api/tasks');
+        const response = await fetch(`${BASE_URL}`);
 
         if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
@@ -23,7 +25,7 @@ export async function loadTasks(): Promise<Task[]> {
 export async function createTask(task: Task): Promise<Task | null> {
     try {
         console.log("Aufgabe:", JSON.stringify(task, null, 2));
-        const response = await fetch('http://localhost:8080/api/tasks', {
+        const response = await fetch(`${BASE_URL}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(task),
@@ -57,7 +59,7 @@ export async function updateTask(task: {
 
         const { taskId, ...rest } = task; // taskId rausnehmen, Rest bleibt
 
-        const response = await fetch(`http://localhost:8080/api/tasks/${taskId}`, {
+        const response = await fetch(`${BASE_URL}/${taskId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(rest),
@@ -74,5 +76,22 @@ export async function updateTask(task: {
     } catch (e) {
         console.error("Fehler beim Update der Aufgabe:", e);
         return null;
+    }
+}
+
+export async function deleteTask(taskId: number): Promise<boolean> {
+    try {
+        const response = await fetch(`${BASE_URL}/${taskId}`, {
+            method: 'DELETE'
+        });
+
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+        return true;
+
+    } catch (e) {
+        console.error("Fehler beim löschen der Aufgabe: ", e);
+        return false;
     }
 }

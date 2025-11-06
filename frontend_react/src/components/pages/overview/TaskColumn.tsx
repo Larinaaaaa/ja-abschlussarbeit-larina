@@ -37,6 +37,7 @@ interface TaskColumnProps {
                            complexity: Complexity;
                        }>
     ) => void;
+    handleDeleteTask: (taskId: number) => void;
     handleCreateSubtask: (taskId: number, name: string) => void;
     handleUpdateSubtask: (subtaskId: number, taskId: number, updatedData: { name: string; completed: boolean }) => void;
     handleDeleteSubtask: (taskId: number, subtaskId: number) => void;
