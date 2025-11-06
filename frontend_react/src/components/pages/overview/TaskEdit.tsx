@@ -107,7 +107,9 @@ const TaskEdit: React.FC<TaskEditProps> = ({task, onCancel, onUpdate, loading, e
             >
                 <React.Fragment key=".0">
                     <optgroup label="Optionen:">
-                        {Object.values(Status).map((status) => (
+                        {Object.values(Status)
+                            .filter((s) => s !== Status.DONE)
+                            .map((status) => (
                             <option key={status} value={status}>
                                 {status}
                             </option>

@@ -118,7 +118,9 @@ const TaskInput: React.FC<TaskInputProps> = ({
             >
                 <React.Fragment key=".0">
                     <optgroup label="Optionen:">
-                        {Object.values(Status).map((status) => (
+                        {Object.values(Status)
+                            .filter((s) => s !== Status.DONE)
+                            .map((status) => (
                             <option key={status} value={status}>
                                 {status}
                             </option>
