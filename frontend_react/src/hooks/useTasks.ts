@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Task} from "../model/Task.ts";
-import {createTask, loadTasks, updateTask} from "../api/task-api.ts";
+import {createTask, loadTasks, updateTask, deleteTask} from "../api/task-api.ts";
 import {Category} from "../model/enums/Category.ts";
 import {Status} from "../model/enums/Status.ts";
 import {Priority} from "../model/enums/Priority.ts";
@@ -22,10 +22,11 @@ export function useTasks() {
                 setLoading(false);
             }
         }
+
         fetchTasks();
     }, []);
 
-    const addTask = async (task: {
+    const addTaskHook = async (task: {
         name: string;
         details: string;
         dueDate?: string;
@@ -61,7 +62,7 @@ export function useTasks() {
         }
     };
 
-    const updateTaskHandler = async (
+    const updateTaskHook = async (
         taskId: number,
         updatedData: {
             name?: string;
@@ -88,11 +89,30 @@ export function useTasks() {
                 );
             }
         } catch (err) {
+            console.error("Fehler beim Bearbeiten der Aufgabe:", err);
             setError((err as Error).message);
         } finally {
             setLoading(false);
         }
     };
 
-    return { tasks, addTask, updateTaskHandler, loading, error };
+    const deleteTaskHook = async (taskId: number) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const result = await deleteTask(taskId);
+            if (result) {
+                setTasks(prev => prev.filter(task => task.id !== taskId))
+            }
+
+        } catch (err) {
+            console.error("Fehler beim Löschen der Aufgabe:", err);
+            setError((err as Error).message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return {tasks, addTaskHook, updateTaskHook, deleteTaskHook, loading, error};
 }

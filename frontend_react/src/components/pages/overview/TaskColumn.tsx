@@ -63,6 +63,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                                    subTasksByTask,
                                                    handleCreateTask,
                                                    handleUpdateTask,
+                                                   handleDeleteTask,
                                                    handleCreateSubtask,
                                                    handleUpdateSubtask,
                                                    handleDeleteSubtask,
@@ -151,7 +152,10 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                             <Text variant="copy3" weight="bold"
                                                   className="button-text">Bearbeiten</Text>
                                         </button>
-                                        <button id="edit-button">
+                                        <button
+                                            id="edit-button"
+                                            onClick={() => handleDeleteTask(task.id)}
+                                        >
                                             <Text variant="copy3" weight="bold" className="button-text">Löschen</Text>
                                         </button>
 
