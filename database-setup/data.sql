@@ -33,7 +33,7 @@ CREATE TABLE subtask
 -- Statische Daten einfügen
 INSERT INTO task (name, created, due_date, details, category, priority, complexity, status)
 VALUES ('Projekt vorbereiten', '2025-09-03', '2025-09-15',
-        'Projektplan erstellen und Ressourcen klären', 'VS', 'HIGH', 'HIGH', 'OPEN'),
+        'Projektplan erstellen und Ressourcen klären', 'VS', 'HIGH', 'HIGH', 'DONE'),
 
        ('Dokumentation schreiben', '2025-09-04', '2025-09-20',
         'Technische Dokumentation erstellen', 'VS', 'MEDIUM', 'MEDIUM', 'OPEN'),
@@ -47,6 +47,6 @@ VALUES ('Projekt vorbereiten', '2025-09-03', '2025-09-15',
 
 INSERT INTO subtask (name, completed, task_id)
 VALUES ('Projektplan schreiben', TRUE, 1),
-       ('Kickoff Meeting', FALSE, 1),
+       ('Kickoff Meeting', TRUE, 1),
        ('API-Dokumentation erstellen', FALSE, 2),
        ('Review durchführen', FALSE, 2);

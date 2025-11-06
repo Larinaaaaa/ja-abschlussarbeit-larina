@@ -129,7 +129,13 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
             )}
 
             <Accordion>
-                {tasks.map(task => (
+                {[...tasks]
+                    .sort((a, b) => {
+                        if (a.status === Status.DONE && b.status !== Status.DONE) return 1;
+                        if (a.status !== Status.DONE && b.status === Status.DONE) return -1;
+                        return 0;
+                    })
+                    .map(task => (
                     <AccordionSection
                         key={task.id}
                         headingLevel="h2"
@@ -138,9 +144,15 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                             <div className="task-label">
                                 <Checkbox
                                     inputId={`checkbox-${task.id}`}
-                                    checked={completedTasks[task.id]}
-                                    onChange={() => toggleCompleted(task.id)}
+                                    checked={task.status === Status.DONE}
+                                    onChange={(e) => {
+                                        e.stopPropagation();
+                                        const newStatus =
+                                            task.status === Status.DONE ? Status.OPEN : Status.DONE;
+                                        handleUpdateTask(task.id, { status: newStatus });
+                                    }}
                                 />
+
                                 <div className="task-subline">
                                     <Text variant="order4" weight="bold">{task.name}
                                         <button
