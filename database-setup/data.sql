@@ -46,7 +46,7 @@ VALUES ('Projekt vorbereiten', '2025-09-03', '2025-09-15',
         'Berufsschule nachtragen', 'SONSTIGE', 'LOW', 'LOW', 'OPEN');
 
 INSERT INTO subtask (name, completed, task_id)
-VALUES ('Projektplan schreiben', FALSE, 1),
+VALUES ('Projektplan schreiben', TRUE, 1),
        ('Kickoff Meeting', FALSE, 1),
        ('API-Dokumentation erstellen', FALSE, 2),
        ('Review durchführen', FALSE, 2);

@@ -1,17 +1,21 @@
 import {SubTask} from "../model/SubTask.ts";
+import {Task} from "../model/Task.ts";
 
 const BASE_URL = "http://localhost:8080/api/subtasks";
 
 export async function loadSubTasks(): Promise<SubTask[]> {
-    const subTasks: SubTask[] = [];
     try {
         const response = await fetch(`${BASE_URL}`);
-        console.log(response)
-        return await response.json();
 
-    } catch (e) {
-        console.error(e);
-        return Promise.resolve(subTasks);
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const subtasks = await response.json();
+        return subtasks as SubTask[];
+    } catch (error) {
+        console.error("Fehler beim laden der Unteraufgaben: ", error);
+        return [];
     }
 }
 
@@ -34,8 +38,8 @@ export async function createSubTask(subtask: {
         }
 
         return await response.json();
-    } catch (e) {
-        console.error("Fehler beim erstellen der Unteraufgabe: ", e);
+    } catch (error) {
+        console.error("Fehler beim erstellen der Unteraufgabe: ", error);
         return null;
     }
 }
@@ -63,9 +67,10 @@ export async function updateSubtask(subtask: {
         if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
         }
+
         return await response.json();
-    } catch (e) {
-        console.error("Fehler beim aktualisieren der Unteraufgabe: ", e);
+    } catch (error) {
+        console.error("Fehler beim aktualisieren der Unteraufgabe: ", error);
         return null;
     }
 }
@@ -79,10 +84,10 @@ export async function deleteSubtask(subtaskId: number): Promise<boolean> {
         if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
         }
-        return true;
 
-    } catch (e) {
-        console.error("Fehler beim löschen der Unteraufgabe: ", e);
+        return true;
+    } catch (error) {
+        console.error("Fehler beim löschen der Unteraufgabe: ", error);
         return false;
     }
 }

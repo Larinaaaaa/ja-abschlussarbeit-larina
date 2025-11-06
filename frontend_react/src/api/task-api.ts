@@ -16,8 +16,8 @@ export async function loadTasks(): Promise<Task[]> {
 
         const tasks = await response.json();
         return tasks as Task[];
-    } catch (e) {
-        console.error("Fehler beim laden der Aufgaben: ", e);
+    } catch (error) {
+        console.error("Fehler beim laden der Aufgaben: ", error);
         return [];
     }
 }
@@ -27,7 +27,7 @@ export async function createTask(task: Task): Promise<Task | null> {
         console.log("Aufgabe:", JSON.stringify(task, null, 2));
         const response = await fetch(`${BASE_URL}`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify(task),
         });
 
@@ -38,8 +38,8 @@ export async function createTask(task: Task): Promise<Task | null> {
         }
 
         return await response.json();
-    } catch (e) {
-        console.error("Fehler beim erstellen der Aufgabe: ", e);
+    } catch (error) {
+        console.error("Fehler beim erstellen der Aufgabe: ", error);
         return null;
     }
 }
@@ -55,13 +55,11 @@ export async function updateTask(task: {
     complexity?: Complexity;
 }): Promise<Task | null> {
     try {
-        console.log("Aufgabe:", JSON.stringify(task, null, 2));
-
-        const { taskId, ...rest } = task; // taskId rausnehmen, Rest bleibt
+        const {taskId, ...rest} = task;
 
         const response = await fetch(`${BASE_URL}/${taskId}`, {
             method: "PUT",
-            headers: { "Content-Type": "application/json" },
+            headers: {"Content-Type": "application/json"},
             body: JSON.stringify(rest),
         });
 
@@ -71,10 +69,9 @@ export async function updateTask(task: {
             return null;
         }
 
-        const updatedTask: Task = await response.json();
-        return updatedTask;
-    } catch (e) {
-        console.error("Fehler beim Update der Aufgabe:", e);
+        return await response.json();
+    } catch (error) {
+        console.error("Fehler beim Update der Aufgabe:", error);
         return null;
     }
 }
@@ -88,10 +85,10 @@ export async function deleteTask(taskId: number): Promise<boolean> {
         if (!response.ok) {
             throw new Error(`Server error: ${response.status}`);
         }
-        return true;
 
-    } catch (e) {
-        console.error("Fehler beim löschen der Aufgabe: ", e);
+        return true;
+    } catch (error) {
+        console.error("Fehler beim löschen der Aufgabe: ", error);
         return false;
     }
 }
