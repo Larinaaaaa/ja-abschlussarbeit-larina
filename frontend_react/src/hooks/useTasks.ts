@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {Task} from "../model/Task.ts";
-import {createTask, loadTasks} from "../api/task-api.ts";
+import {createTask, loadTasks, updateTask} from "../api/task-api.ts";
 import {Category} from "../model/enums/Category.ts";
 import {Status} from "../model/enums/Status.ts";
 import {Priority} from "../model/enums/Priority.ts";
@@ -61,5 +61,38 @@ export function useTasks() {
         }
     };
 
-    return { tasks, addTask, loading, error };
+    const updateTaskHandler = async (
+        taskId: number,
+        updatedData: {
+            name?: string;
+            details?: string;
+            dueDate?: string;
+            category?: Category;
+            status?: Status;
+            priority?: Priority;
+            complexity?: Complexity;
+        }
+    ) => {
+        setLoading(true);
+        setError(null);
+
+        try {
+            const result = await updateTask({
+                taskId,
+                ...updatedData
+            });
+
+            if (result) {
+                setTasks(prev =>
+                    prev.map(task => (task.id === taskId ? result : task))
+                );
+            }
+        } catch (err) {
+            setError((err as Error).message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    return { tasks, addTask, updateTaskHandler, loading, error };
 }

@@ -1,4 +1,4 @@
-import './Overview.css'
+import './Overview.css';
 import React, { useState, useEffect } from "react";
 import { TextField, Text } from "@audi/audi-ui-react";
 

@@ -6,6 +6,7 @@ import {SubTask} from "../../../model/SubTask";
 import SubtaskList from "./SubtaskList";
 import SubtaskInput from "./SubtaskInput";
 import TaskInput from "./TaskInput.tsx";
+import TaskEdit from "./TaskEdit.tsx";
 import {Category} from "../../../model/enums/Category.ts";
 import {Status} from "../../../model/enums/Status.ts";
 import {Complexity} from "../../../model/enums/Complexity.ts";
@@ -25,6 +26,17 @@ interface TaskColumnProps {
         priority?: Priority;
         complexity?: Complexity;
     }) => void;
+    handleUpdateTask: (taskId: number,
+                       updatedData: Partial<{
+                           name: string;
+                           details: string;
+                           dueDate: string;
+                           category: Category;
+                           status: Status;
+                           priority: Priority;
+                           complexity: Complexity;
+                       }>
+    ) => void;
     handleCreateSubtask: (taskId: number, name: string) => void;
     handleUpdateSubtask: (subtaskId: number, taskId: number, updatedData: { name: string; completed: boolean }) => void;
     handleDeleteSubtask: (taskId: number, subtaskId: number) => void;
@@ -49,6 +61,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                                    tasks,
                                                    subTasksByTask,
                                                    handleCreateTask,
+                                                   handleUpdateTask,
                                                    handleCreateSubtask,
                                                    handleUpdateSubtask,
                                                    handleDeleteSubtask,
@@ -59,6 +72,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
     const [inputVisibility, setInputVisibility] = useState<Record<number, boolean>>({});
     const [showTaskInput, setShowTaskInput] = useState(false);
     const [isEditingMode, setIsEditingMode] = useState<Record<number, boolean>>({});
+    const [editingTask, setEditingTask] = useState<Task | null>(null);
 
     const [editingSubtask, setEditingSubtask] = useState<{
         taskId: number;
@@ -96,7 +110,20 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                     loading={loading}
                     error={error}
                 />
-
+            )}
+            {editingTask && (
+                <div className="task-edit-container">
+                    <TaskEdit
+                        task={editingTask}
+                        onCancel={() => setEditingTask(null)}
+                        onUpdate={(taskId, updatedData) => {
+                            handleUpdateTask(taskId, updatedData);
+                            setEditingTask(null);
+                        }}
+                        loading={loading}
+                        error={error}
+                    />
+                </div>
             )}
 
             <Accordion>
@@ -114,7 +141,12 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                 />
                                 <div className="task-subline">
                                     <Text variant="order4" weight="bold">{task.name}
-                                        <button id="edit-button">
+                                        <button
+                                            id="edit-button"
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setEditingTask(task);
+                                            }}>
                                             <Text variant="copy3" weight="bold"
                                                   className="button-text">Bearbeiten</Text>
                                         </button>

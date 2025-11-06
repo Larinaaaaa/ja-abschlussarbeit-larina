@@ -12,7 +12,7 @@ const categoryLabels: Record<Category, string> = {
 }
 
 const Overview: React.FC = () => {
-    const { tasks, addTask, loading, error } = useTasks();
+    const { tasks, addTask, updateTaskHandler, loading, error } = useTasks();
     const { subTasksByTask, addSubTask, updateSubTask, deleteSubTask } = useSubTasks();
 
     const categorizedTasks = tasks.reduce<Record<Category, Task[]>>((acc, task) => {
@@ -31,6 +31,7 @@ const Overview: React.FC = () => {
                     tasks={categorizedTasks[category]}
                     subTasksByTask={subTasksByTask}
                     handleCreateTask={addTask}
+                    handleUpdateTask={updateTaskHandler}
                     handleCreateSubtask={addSubTask}
                     handleUpdateSubtask={updateSubTask}
                     handleDeleteSubtask={deleteSubTask}
