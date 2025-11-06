@@ -217,6 +217,15 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                 onDeleteSubtask={(subtaskId) => {
                                     handleDeleteSubtask(task.id, subtaskId);
                                 }}
+                                onToggleSubtaskCompleted={(subtaskId, completed) => {
+                                    const subtask = subTasksByTask[task.id].find(s => s.id === subtaskId);
+                                    if (subtask) {
+                                        handleUpdateSubtask(subtaskId, task.id, {
+                                            name: subtask.name,
+                                            completed: completed,
+                                        });
+                                    }
+                                }}
                             />
                             <div>
                                 <button

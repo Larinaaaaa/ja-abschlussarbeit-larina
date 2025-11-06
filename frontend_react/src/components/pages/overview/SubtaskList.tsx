@@ -7,13 +7,15 @@ interface SubtaskListProps {
     isEditingMode: boolean;
     onSelectSubtaskToEdit: (subtaskId: number) => void;
     onDeleteSubtask: (subtaskId: number) => void;
+    onToggleSubtaskCompleted: (subtaskId: number, completed: boolean) => void;
 }
 
 const SubtaskList: React.FC<SubtaskListProps> = ({
                                                      subtasks,
                                                      isEditingMode,
                                                      onSelectSubtaskToEdit,
-                                                     onDeleteSubtask
+                                                     onDeleteSubtask,
+                                                     onToggleSubtaskCompleted
                                                  }) => {
     if (subtasks.length === 0) return null;
 
@@ -23,7 +25,13 @@ const SubtaskList: React.FC<SubtaskListProps> = ({
                 <div key={subtask.id} className="subtask-item">
                     <Checkbox
                         inputId={`subtask-${subtask.id}`}
-                        checked={subtask.completed}/>
+                        checked={subtask.completed}
+                        onChange={(e: any) => {
+                            e.stopPropagation();
+                            const newCompleted = !subtask.completed;
+                            onToggleSubtaskCompleted(subtask.id!, newCompleted);
+                        }}
+                    />
                     <Text variant="copy1">{subtask.name}</Text>
 
                     {isEditingMode && (
