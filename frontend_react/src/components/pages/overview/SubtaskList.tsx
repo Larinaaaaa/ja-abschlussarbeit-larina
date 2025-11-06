@@ -32,7 +32,10 @@ const SubtaskList: React.FC<SubtaskListProps> = ({
                             onToggleSubtaskCompleted(subtask.id!, newCompleted);
                         }}
                     />
-                    <Text variant="copy1">{subtask.name}</Text>
+                    <Text
+                        variant="copy1"
+                        tint={subtask.completed ? "secondary" : "primary"}
+                    >{subtask.name}</Text>
 
                     {isEditingMode && (
                         <div className="subtask-buttons">
