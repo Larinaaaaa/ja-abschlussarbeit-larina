@@ -145,6 +145,7 @@ const TaskColumn: React.FC<TaskColumnProps> = ({
                                 <Checkbox
                                     inputId={`checkbox-${task.id}`}
                                     checked={task.status === Status.DONE}
+                                    onClick={(e) = > e.stopPropagation()}
                                     onChange={(e) => {
                                         e.stopPropagation();
                                         const newStatus =

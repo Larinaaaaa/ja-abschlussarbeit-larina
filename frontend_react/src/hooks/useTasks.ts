@@ -16,8 +16,8 @@ export function useTasks() {
             try {
                 const data = await loadTasks();
                 setTasks(data);
-            } catch (err) {
-                setError((err as Error).message);
+            } catch (error) {
+                setError((error as Error).message);
             } finally {
                 setLoading(false);
             }
@@ -55,8 +55,8 @@ export function useTasks() {
             } else {
                 setError("Fehler beim Erstellen der Aufgabe");
             }
-        } catch (err) {
-            setError((err as Error).message);
+        } catch (error) {
+            setError((error as Error).message);
         } finally {
             setLoading(false);
         }
@@ -88,9 +88,9 @@ export function useTasks() {
                     prev.map(task => (task.id === taskId ? result : task))
                 );
             }
-        } catch (err) {
-            console.error("Fehler beim Bearbeiten der Aufgabe:", err);
-            setError((err as Error).message);
+        } catch (error) {
+            console.error("Fehler beim Bearbeiten der Aufgabe:", error);
+            setError((error as Error).message);
         } finally {
             setLoading(false);
         }
@@ -106,9 +106,9 @@ export function useTasks() {
                 setTasks(prev => prev.filter(task => task.id !== taskId))
             }
 
-        } catch (err) {
-            console.error("Fehler beim Löschen der Aufgabe:", err);
-            setError((err as Error).message);
+        } catch (error) {
+            console.error("Fehler beim Löschen der Aufgabe:", error);
+            setError((error as Error).message);
         } finally {
             setLoading(false);
         }

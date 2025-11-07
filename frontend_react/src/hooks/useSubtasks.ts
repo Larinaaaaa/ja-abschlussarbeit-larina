@@ -27,21 +27,17 @@ export function useSubTasks() {
                 }, {});
 
                 setSubTasksByTask(grouped);
-
-                console.log("Fetched Subtasks:", allSubTasks);
-            } catch (e) {
-                console.error(e);
-                setError((e as Error).message);
+            } catch (error) {
+                setError((error as Error).message);
             } finally {
                 setLoading(false);
             }
         }
 
-
         fetchSubTasks();
     }, []);
 
-    const addSubTask = async (taskId: number, name: string) => {
+    const addSubTaskHook = async (taskId: number, name: string) => {
         setLoading(true);
         setError(null);
         try {
@@ -53,14 +49,14 @@ export function useSubTasks() {
                     [taskId]: [...(prev[taskId] || []), result]
                 }));
             }
-        } catch (err) {
-            setError((err as Error).message);
+        } catch (error) {
+            setError((error as Error).message);
         } finally {
             setLoading(false);
         }
     };
 
-    const updateSubTask = async (
+    const updateSubTaskHook = async (
         subtaskId: number,
         taskId: number,
         updatedData: { name: string; completed: boolean }) => {
@@ -83,14 +79,14 @@ export function useSubTasks() {
                     ),
                 }));
             }
-        } catch (err) {
-            setError((err as Error).message);
+        } catch (error) {
+            setError((error as Error).message);
         } finally {
             setLoading(false);
         }
     };
 
-    const deleteSubTask = async (taskId: number, subtaskId: number) => {
+    const deleteSubTaskHook = async (taskId: number, subtaskId: number) => {
         setLoading(true);
         setError(null);
 
@@ -102,12 +98,12 @@ export function useSubTasks() {
                     [taskId]: (prev[taskId] ?? []).filter(subtask => subtask.id !== subtaskId),
                 }));
             }
-        } catch (err) {
-            setError((err as Error).message);
+        } catch (error) {
+            setError((error as Error).message);
         } finally {
             setLoading(false);
         }
     };
 
-    return {subTasksByTask, addSubTask, updateSubTask, deleteSubTask, loading, error};
+    return {subTasksByTask, addSubTaskHook, updateSubTaskHook, deleteSubTaskHook, loading, error};
 }
